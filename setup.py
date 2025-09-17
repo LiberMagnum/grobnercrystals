@@ -1,17 +1,17 @@
 #!/usr/bin/env sage
 from setuptools import setup # type: ignore
-from GCS import __version__
+from grobnercrystals import __version__
 
 setup(
-    name='GCS',
+    name='grobnercrystals',
     version=__version__,
     description='A SageMath package for working with Gröbner crystal structures',
 
-    url='https://github.com/LiberMagnum/GCS',
+    url='https://github.com/LiberMagnum/grobnercrystals',
     author='Abigail Price',
     author_email='price29@illinois.edu',
 
-    py_modules=['GCS'],
+    py_modules=['grobnercrystals'],
     install_requires=[
         'sage-package',
         'numpy',
