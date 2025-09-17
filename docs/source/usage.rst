@@ -8,7 +8,7 @@ To use grobnercrystals, first install it using pip:
 
 .. code-block:: console
 
-   $ pip install grobnercrystals
+   $  sage --pip install grobnercrystals
 
 The package can then be imported at the beginning of any SageMath script:
 
