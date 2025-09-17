@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Documentation &#8212; grobnercrystals 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">¶</a></h1>
+<section id="permutations">
+<h2>Permutations<a class="headerlink" href="#permutations" title="Permalink to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">grobnercrystals.Perm</span></code> class is a class for permutations which includes useful methods
+for working with matrix Schubert varieties:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="grobnercrystals.Perm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">Perm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">perm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class for permutations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>perm</strong> (<em>list</em>) – The permutation in one-line notation as a list of integers</p></li>
+<li><p><strong>region</strong> (<em>list</em><em>, </em><em>optional</em>) – The region the permutation should be restricted to, as a  
+list of tuples (i,j) with i,j in [0,length(perm)-1] (for working with 
+usual instead of effective matrix Schubert varieties)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>perm</strong> – the permutation in one-line notation as a list of integers</p></li>
+<li><p><strong>l</strong> – int, length of the permutation</p></li>
+<li><p><strong>region</strong> – parameter region if specified, else list of tuples (i,j) of integers between 0 and l-1</p></li>
+<li><p><strong>descents</strong> – list of the descents of the permutation (as integers)</p></li>
+<li><p><strong>inverse</strong> – inverse of the permutation in one-line notation as a list of integers</p></li>
+<li><p><strong>inverse_descents</strong> – list of the descents of the inverse of the permutation (as integers)</p></li>
+<li><p><strong>vexillary</strong> – bool, True if the permutation is vexillary, else False</p></li>
+<li><p><strong>max_row</strong> – int, largest i such that (i,j) is in region</p></li>
+<li><p><strong>max_col</strong> – int, largest j such that (i,j) is in region</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.Perm.eff_reg">
+<span class="sig-name descname"><span class="pre">eff_reg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retMaxDim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm.eff_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the effective region of the permutation, i.e.
+the set of all tuples (i,j) so that (i,j) is weakly northwest of the
+southeast most box in the Rothe diagram for the permutation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>retMaxDim</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to return the largest row and column in the effective region, defaults to False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.Perm.levi_datum">
+<span class="sig-name descname"><span class="pre">levi_datum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm.levi_datum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the Levi datum corresponding to the largest Levi
+group which acts on the effective matrix Schubert variety 
+corresponding to the permutation. If a region is specified,
+returns the Levi datum corresponding to the largest Levi
+group which acts on the matrix Schubert variety when restricted
+to that region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A Levi datum [I,J], where I,J are lists of integers</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="filtered-rsk">
+<h2>Filtered RSK<a class="headerlink" href="#filtered-rsk" title="Permalink to this heading">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These functions take numpy matrices as input.</p>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.filtered_RSK">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">filtered_RSK</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.filtered_RSK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the result of applying filteredRSK to a matrix for a given Levi datum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>M</strong> (<em>numpy matrix</em>) – The matrix to be filterRSK’d</p></li>
+<li><p><strong>I</strong> (<em>list</em>) – The row Levi datum</p></li>
+<li><p><strong>J</strong> (<em>list</em>) – The column Levi datum</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of tableau [[row tableaux],[column tableaux]]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="crystal-operators-on-matrices">
+<h2>Crystal Operators on Matrices<a class="headerlink" href="#crystal-operators-on-matrices" title="Permalink to this heading">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These functions take numpy matrices as input.</p>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.e">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.e" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raising matrix crystal operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>M</strong> (<em>numpy matrix</em>) – Matrix to apply the operator to</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – row or column index</p></li>
+<li><p><strong>rc</strong> (<em>str</em><em> or </em><em>int</em>) – ‘r’ or 0 if row operator, ‘c’ or 1 if column operator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of applying raising crystal operator to M if possible. 
+If the result of applying the operator to M is the empty symbol, return None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy matrix or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.f">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">f</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lowering matrix crystal operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>M</strong> (<em>numpy matrix</em>) – Matrix to apply the operator to</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – row or column index</p></li>
+<li><p><strong>rc</strong> (<em>str</em><em> or </em><em>int</em>) – ‘r’ or 0 if row operator, ‘c’ or 1 if column operator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of applying lowering crystal operator to M if possible. 
+If the result of applying the operator to M is the empty symbol, return None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy matrix or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="polynomial-rings">
+<h2>Polynomial Rings<a class="headerlink" href="#polynomial-rings" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="ideals-and-bicrystalline-tests">
+<h2>Ideals and Bicrystalline Tests<a class="headerlink" href="#ideals-and-bicrystalline-tests" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="interesting-classes-of-ideals">
+<h2>Interesting Classes of Ideals<a class="headerlink" href="#interesting-classes-of-ideals" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="group-action-checks">
+<h2>Group Action Checks<a class="headerlink" href="#group-action-checks" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.check_action">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">check_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.check_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether a given Levi group acts on a given ideal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>I</strong> (<em>BIdeal</em>) – The ideal to be checked</p></li>
+<li><p><strong>L</strong> (<em>list</em>) – A Levi datum [I,J]</p></li>
+<li><p><strong>detailed_output</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, prints a pair (Gröbner basis element,Gröbner basis element after group action) which fails the check (if such a pair exists), defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the Levi group defined by L acts on I, else False</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">grobnercrystals</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2025, Abigail Price.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/documentation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
