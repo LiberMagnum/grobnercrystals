@@ -13,6 +13,7 @@ To use grobnercrystals, first install it using pip:
 The package can then be imported at the beginning of any SageMath script:
 
 .. code-block:: python
+    
     import grobnercrystals
 
 Dependencies
