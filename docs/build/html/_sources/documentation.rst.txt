@@ -45,11 +45,11 @@ Grobnercrystals includes a class for defining a polynomial ring in an m by n mat
 Ideals and Bicrystalline Tests
 ------------------------------
 
-Ideals are constructed using the ``grobnercrystals.BIdeal`` class. Every ``BIdeal`` is an ideal of a polynomial ring in an m by n matrix of variables, implemented as a ``PolRing`` object. ``BIdeal``s have a ``.bicrystalline()`` method for checking whether the ideal is bicrystalline
+Ideals are constructed using the ``grobnercrystals.BIdeal`` class. Every ``BIdeal`` is an ideal of a polynomial ring in an m by n matrix of variables, implemented as a ``PolRing`` object. This class has a ``.bicrystalline()`` method for checking whether the ideal is bicrystalline
 
 .. note:: 
 
-    The ``.bicrystalline()`` method does *not* check whether the ideal is stable under the given Levi group, only whether the set of its non-standard monomials is closed under all admissible bicrystal operators for that Levi group. See `Group Action Checks`__.
+    The ``.bicrystalline()`` method does *not* check whether the ideal is stable under the given Levi group, only whether the set of its non-standard monomials is closed under all admissible bicrystal operators for that Levi group. See :ref:`group-actions`.
 
 .. autoclass:: grobnercrystals.BIdeal
     :members:
@@ -71,6 +71,8 @@ The following function is useful for defining various
 determinantal ideals.
 
 .. autofunction:: grobnercrystals.minors()
+
+.. _group-actions:
 
 Group Action Checks
 -------------------

@@ -238,7 +238,7 @@ class Perm():
             return True
         return False
 
-    def essential_set(self):
+    def ess_set(self):
         def FindBoxes(effReg,dots):
             retVal = []
             for box in effReg:
@@ -294,8 +294,8 @@ class Perm():
         return retVal
     
     # returns [[(essential set box), number in that box]]
-    def filled_essential_set(self):
-        essSet = self.essential_set()
+    def filled_ess_set(self):
+        essSet = self.ess_set()
         dots = [(i,self.perm[i]-1) for i in range(self.max_row+1) if not self.perm[i] > self.max_col]
         retVal = []
         for box in essSet:
@@ -941,7 +941,7 @@ class PolRing():
         self.graded_m2_str = m2_graded_ring_str(m,n,weights,self.vars,to)
         self.ungraded_m2_str = m2_ungraded_ring_str(self.vars,to)
 
-    def hilbert_series_exp(self,deg):
+    def hilb_exp(self,deg):
         m2.macaulay2.set('R',self.graded_m2_str) 
         h = m2.macaulay2("toString hilbertSeries(R,Order=>"+str(deg)+")").sage()
         p = M2_to_Sage(h,self.XY)
@@ -979,7 +979,7 @@ class BIdeal():
 
         # if term order specified, find GB for the specified term order
         if use_to is not None:
-            in_ideals_gen_ls = [self.gb_lead_terms(to=use_to)]
+            in_ideals_gen_ls = [self.gb_lts(to=use_to)]
 
         # if term order is not specified, find the Grobner fan
         if use_to is None:
@@ -997,10 +997,10 @@ class BIdeal():
         # gen_ls = [[lts of GB elts for TO 1], ...] as np matrices
         gen_ls = []
         for in_ideal in in_ideals_gen_ls:
-            gb_lead_terms_mats = []
+            gb_lts_mats = []
             for elt in in_ideal:
-                gb_lead_terms_mats.append(sage_mon_to_mat(elt,self.PR.m,self.PR.n))
-            gen_ls.append(gb_lead_terms_mats)
+                gb_lts_mats.append(sage_mon_to_mat(elt,self.PR.m,self.PR.n))
+            gen_ls.append(gb_lts_mats)
 
         def is_bicrystalline(self,gens):
             if detailed_output:
@@ -1102,7 +1102,7 @@ class BIdeal():
         dim = self.PR.n if op[2]=='r' else self.PR.m
 
         if gb is None:
-            gb = self.gb_lead_terms_mats(to=to)
+            gb = self.gb_lts_mats(to=to)
 
         # Compute the largest sum of adjacent rows/columns
         sums_ls = []
@@ -1135,7 +1135,7 @@ class BIdeal():
 
         return TS.values()
 
-    def minimal_test_set(self,op,gb=None,to=None):
+    def min_test_set(self,op,gb=None,to=None):
         ts = self.test_set(op,gb,to)
 
         mts = []
@@ -1161,7 +1161,7 @@ class BIdeal():
                         mts.append(elt)
         return mts
 
-    # NB: This function is only called from bicrystalline or non_standard_monomials, won't work independently
+    # NB: This function is only called from bicrystalline or nstd_mons, won't work independently
     def initial_ideal_from_gens(self,gens):
         m2_str = "monomialIdeal ideal("
         for gen in gens:
@@ -1173,13 +1173,13 @@ class BIdeal():
     # returns all non-standard monomials for a given degree
     # if gens is specified, will create an initial ideal from the given generators
     # if leq=True, will find all non-standard monomials less than or equal to a given degree
-    def non_standard_monomials(self,deg,gens=None,leq=False):
+    def nstd_mons(self,deg,gens=None,leq=False):
         # Make sure that ring and ideal are defined in M2, use ungraded version
         m2.macaulay2.set("R",self.PR.ungraded_m2_str)
         m2.macaulay2.set("I",self.m2_ideal_str)
 
         if gens is None:
-            gens = self.gb_lead_terms()
+            gens = self.gb_lts()
 
         self.initial_ideal_from_gens(gens)
         ret_val = []
@@ -1208,8 +1208,8 @@ class BIdeal():
             return ret_val
 
 
-    def non_standard_monomials_mats(self,deg,gens=None,leq=False):
-        non_std_mons = self.non_standard_monomials(deg,gens=gens,leq=leq)
+    def nstd_mons_mats(self,deg,gens=None,leq=False):
+        non_std_mons = self.nstd_mons(deg,gens=gens,leq=leq)
         ret_val = []
         for elt in non_std_mons:
             ret_val.append(sage_mon_to_mat(elt,self.PR.m,self.PR.n))
@@ -1218,7 +1218,7 @@ class BIdeal():
     # Uses M2 to compute the Hilbert series
     # Input: degree of the expansion
     # Optional inputs: weights for the torus action
-    def hilbert_series_exp(self,deg):
+    def hilb_exp(self,deg):
         # Define the ideal in M2
         m2.macaulay2.set("R",self.PR.graded_m2_str)
         m2.macaulay2.set("I",self.m2_ideal_str)
@@ -1248,7 +1248,7 @@ class BIdeal():
     # Outputs gb for self 
     # Default: antidiagonal term order
     # TODO: implement optional argument to specify term order
-    def gb_lead_terms(self,to=None):
+    def gb_lts(self,to=None):
         if to is None:
             m2.macaulay2.set("R",self.PR.ungraded_m2_str)
         if to is not None:
@@ -1266,14 +1266,14 @@ class BIdeal():
             LTs.append(m)
         return LTs
 
-    def gb_lead_terms_mats(self,to=None):
-        lts = self.gb_lead_terms(to=to)
+    def gb_lts_mats(self,to=None):
+        lts = self.gb_lts(to=to)
         ret_val = []
         for elt in lts:
             ret_val.append(sage_mon_to_mat(elt,self.PR.m,self.PR.n))
         return ret_val
 
-    def define_m2_vars(self,graded=False,ideal_name="I",ring_name="R"):
+    def def_m2_vars(self,graded=False,ideal_name="I",ring_name="R"):
         if graded:
             m2.macaulay2.set(ring_name,self.PR.graded_m2_str)
             m2.macaulay2.set(ideal_name,self.m2_ideal_str)
@@ -1506,7 +1506,7 @@ def msv(w,region=None,R=None):
         R = PolRing(w.max_row,w.max_col)
 
     def fulton_generator_mats():
-        essSet = w.filled_essential_set()
+        essSet = w.filled_ess_set()
         minors = []
         for box in essSet:
             boxMat = R.Z[[i for i in range(box[0][0]+1)],[j for j in range(box[0][1]+1)]]
@@ -1553,7 +1553,7 @@ def graphical_matroid(adj,detailed_output=False,fake=False):
 
     if not fake:
         # compute primary decomposition
-        I.define_m2_vars()
+        I.def_m2_vars()
 
         if detailed_output:
             print("Computing primary decomposition")

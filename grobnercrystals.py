@@ -238,7 +238,7 @@ class Perm():
             return True
         return False
 
-    def essential_set(self):
+    def ess_set(self):
         """Finds Fulton's essential set.
 
         :return: Fulton's essential set as a list of indices [(i,j)]
@@ -300,7 +300,7 @@ class Perm():
         return retVal
     
     # returns [[(essential set box), number in that box]]
-    def filled_essential_set(self):
+    def filled_ess_set(self):
         """Finds Fulton's essential set, together with the rank conditions imposed by 
         each box in the essential set.
 
@@ -308,7 +308,7 @@ class Perm():
         :rtype: list
         """
         
-        essSet = self.essential_set()
+        essSet = self.ess_set()
         dots = [(i,self.perm[i]-1) for i in range(self.max_row+1) if not self.perm[i] > self.max_col]
         retVal = []
         for box in essSet:
@@ -736,21 +736,17 @@ class SplitPoly():
         the expansion. Optionally, can output a dictionary of the form {tuple of 
         partitions, permutations, or exponents : coefficient in the expansion}.
 
-        :param x: What type of polynomial to expand the x variables in ('s' for Schur,
-        'm' for Monomial), defaults to None
+        :param x: What type of polynomial to expand the x variables in ('s' for Schur,'m' for Monomial), defaults to None
         :type x: str, optional
-        :param y: What type of polynomial to expand the x variables in ('s' for Schur, 
-        'm' for Monomial), defaults to None,
+        :param y: What type of polynomial to expand the x variables in ('s' for Schur,'m' for Monomial), defaults to None,
         :type y: str, optional
         :param I: Row Levi datum, defaults to []
         :type I: list, optional
         :param J: Column Levi datum, defaults to []
         :type J: list, optional
-        :param returnDict: True to return a dictionary, False to return a string, defaults 
-        to False
+        :param returnDict: True to return a dictionary, False to return a string, defaults to False
         :type returnDict: bool, optional
-        :param maxIter: Maximum number of subtractions allowed per degree component, 
-        defaults to 10000
+        :param maxIter: Maximum number of subtractions allowed per degree component, defaults to 10000
         :type maxIter: int, optional
         :raises MemoryError: if the number of subtractions exceeds maxIter
         :return: A string representing the desired expansion (or, optionally, a dictionary)
@@ -990,7 +986,7 @@ class PolRing():
         self.graded_m2_str = m2_graded_ring_str(m,n,self.vars,to)
         self.ungraded_m2_str = m2_ungraded_ring_str(self.vars,to)
 
-    def hilbert_series_exp(self,deg):
+    def hilb_exp(self,deg):
         """Returns Hilbert series for R up to specified degree as a SplitPoly object.
 
         :param deg: degree of the expansion
@@ -1040,10 +1036,8 @@ class BIdeal():
     def bicrystalline(self,I,J,use_to=None,detailed_output=False):
         """Checks whether the ideal is bicrystalline with respect to a given
         Levi action. Optionally, instead of checking all term orders, one
-        can check a specific term order.
-
-        This function does *not* check whether the ideal is stable under
-        the action of the given Leiv group, or whether it is homogeneous.
+        can check a specific term order. This function does *not* check whether the ideal 
+        is stable under the action of the given Leiv group, or whether it is homogeneous.
 
         :param I: row Levi datum
         :type I: list
@@ -1051,11 +1045,9 @@ class BIdeal():
         :type J: list
         :param use_to: Macaulay2 term order to use, defaults to None
         :type use_to: list, optional
-        :param detailed_output: when true, outputs details about the checks it
-        makes to the terminal, defaults to False
+        :param detailed_output: when true, outputs details about the checks it makes to the terminal, defaults to False
         :type detailed_output: bool, optional
-        :return: True if the ideal is bicrystalline (assuming it is homogeneous 
-        and stable under the input Levi group), else False
+        :return: True if the ideal is bicrystalline (assuming it is homogeneous and stable under the input Levi group), else False
         :rtype: bool
         """
 
@@ -1068,7 +1060,7 @@ class BIdeal():
 
         # if term order specified, find GB for the specified term order
         if use_to is not None:
-            in_ideals_gen_ls = [self.gb_lead_terms(to=use_to)]
+            in_ideals_gen_ls = [self.gb_lts(to=use_to)]
 
         # if term order is not specified, find the Grobner fan
         if use_to is None:
@@ -1086,10 +1078,10 @@ class BIdeal():
         # gen_ls = [[lts of GB elts for TO 1], ...] as np matrices
         gen_ls = []
         for in_ideal in in_ideals_gen_ls:
-            gb_lead_terms_mats = []
+            gb_lts_mats = []
             for elt in in_ideal:
-                gb_lead_terms_mats.append(sage_mon_to_mat(elt,self.PR.m,self.PR.n))
-            gen_ls.append(gb_lead_terms_mats)
+                gb_lts_mats.append(sage_mon_to_mat(elt,self.PR.m,self.PR.n))
+            gen_ls.append(gb_lts_mats)
 
         def is_bicrystalline(self,gens):
             if detailed_output:
@@ -1191,11 +1183,9 @@ class BIdeal():
         """Outputs a test set for a given bicrystal operator, and optionally
         a given Grobner basis or term order.
 
-        :param op: bicrystal operator as a list ['f' or 'e',i,'r' or 'c'], 
-        e.g. ['f',1,'r'] for the row lowering operator f1
+        :param op: bicrystal operator as a list ['f' or 'e',i,'r' or 'c'], e.g. ['f',1,'r'] for the row lowering operator f1
         :type op: list
-        :param gb: lead terms of a Grobner basis for I as a list of numpy matrices, 
-        defaults to None
+        :param gb: lead terms of a Grobner basis for I as a list of numpy matrices, defaults to None
         :type gb: list, optional
         :param to: a Macaulay2 term order, defaults to None
         :type to: str, optional
@@ -1206,7 +1196,7 @@ class BIdeal():
         dim = self.PR.n if op[2]=='r' else self.PR.m
 
         if gb is None:
-            gb = self.gb_lead_terms_mats(to=to)
+            gb = self.gb_lts_mats(to=to)
 
         # Compute the largest sum of adjacent rows/columns
         sums_ls = []
@@ -1239,15 +1229,13 @@ class BIdeal():
 
         return TS.values()
 
-    def minimal_test_set(self,op,gb=None,to=None):
+    def min_test_set(self,op,gb=None,to=None):
         """Outputs the unique *minimal* test set for a given bicrystal operator,
         and optionally a given Grobner basis or term order.
 
-        :param op: bicrystal operator as a list ['f' or 'e',i,'r' or 'c'], 
-        e.g. ['f',1,'r'] for the row lowering operator f1
+        :param op: bicrystal operator as a list ['f' or 'e',i,'r' or 'c'], e.g. ['f',1,'r'] for the row lowering operator f1
         :type op: list
-        :param gb: lead terms of a Grobner basis for I as a list of numpy matrices, 
-        defaults to None
+        :param gb: lead terms of a Grobner basis for I as a list of numpy matrices, defaults to None
         :type gb: list, optional
         :param to: a Macaulay2 term order, defaults to None
         :type to: str, optional
@@ -1280,7 +1268,7 @@ class BIdeal():
                         mts.append(elt)
         return mts
 
-    # NB: This function is only called from bicrystalline or non_standard_monomials, won't work independently
+    # NB: This function is only called from bicrystalline or nstd_mons, won't work independently
     def initial_ideal_from_gens(self,gens):
         m2_str = "monomialIdeal ideal("
         for gen in gens:
@@ -1292,16 +1280,14 @@ class BIdeal():
     # returns all non-standard monomials for a given degree
     # if gens is specified, will create an initial ideal from the given generators
     # if leq=True, will find all non-standard monomials less than or equal to a given degree
-    def non_standard_monomials(self,deg,gens=None,leq=False):
+    def nstd_mons(self,deg,gens=None,leq=False):
         """Returns all non-standard monomials for I up to a given degree as ring elements.
 
         :param deg: degree
         :type deg: int
-        :param gens: optional list of lead terms of generators of the 
-        initial ideal as ring elements, defaults to None
+        :param gens: optional list of lead terms of generators of the initial ideal as ring elements, defaults to None
         :type gens: list, optional
-        :param leq: optionally return all nonstandard monomials of at most input 
-        degree, defaults to False
+        :param leq: optionally return all nonstandard monomials of at most input degree, defaults to False
         :type leq: bool, optional
         :return: list of all nonstandard monomials of a given degree as ring elements
         :rtype: list
@@ -1312,7 +1298,7 @@ class BIdeal():
         m2.macaulay2.set("I",self.m2_ideal_str)
 
         if gens is None:
-            gens = self.gb_lead_terms()
+            gens = self.gb_lts()
 
         self.initial_ideal_from_gens(gens)
         ret_val = []
@@ -1341,22 +1327,20 @@ class BIdeal():
             return ret_val
 
 
-    def non_standard_monomials_mats(self,deg,gens=None,leq=False):
+    def nstd_mons_mats(self,deg,gens=None,leq=False):
         """Returns all non-standard monomials for I up to a given degree as numpy matrices.
 
         :param deg: degree
         :type deg: int
-        :param gens: optional list of lead terms of generators of the 
-        initial ideal as ring elements, defaults to None
+        :param gens: optional list of lead terms of generators of the initial ideal as ring elements, defaults to None
         :type gens: list, optional
-        :param leq: optionally return all nonstandard monomials of at most input 
-        degree, defaults to False
+        :param leq: optionally return all nonstandard monomials of at most input degree, defaults to False
         :type leq: bool, optional
         :return: list of all nonstandard monomials of a given degree as numpy matrices
         :rtype: list
         """
 
-        non_std_mons = self.non_standard_monomials(deg,gens=gens,leq=leq)
+        non_std_mons = self.nstd_mons(deg,gens=gens,leq=leq)
         ret_val = []
         for elt in non_std_mons:
             ret_val.append(sage_mon_to_mat(elt,self.PR.m,self.PR.n))
@@ -1364,7 +1348,7 @@ class BIdeal():
 
     # Uses M2 to compute the Hilbert series
     # Input: degree of the expansion
-    def hilbert_series_exp(self,deg):
+    def hilb_exp(self,deg):
         """Computes the Hilbert series expansion of I up to a given degree.
         The Hilbert series is output as a SplitPol.
 
@@ -1411,7 +1395,7 @@ class BIdeal():
 
     # Outputs gb for self 
     # Default: antidiagonal term order
-    def gb_lead_terms(self,to=None):
+    def gb_lts(self,to=None):
         """Computes the lead terms of a Grobner basis for the ideal. Optionally, 
         one may specify the term order. The default is the term order of the 
         parent PolRing.
@@ -1439,7 +1423,7 @@ class BIdeal():
             LTs.append(m)
         return LTs
 
-    def gb_lead_terms_mats(self,to=None):
+    def gb_lts_mats(self,to=None):
         """Computes the lead terms of a Grobner basis for the ideal. Optionally, 
         one may specify the term order. The default is the term order of the 
         parent PolRing. The lead terms are output as numpy matrices.
@@ -1450,13 +1434,13 @@ class BIdeal():
         :rtype: list
         """
 
-        lts = self.gb_lead_terms(to=to)
+        lts = self.gb_lts(to=to)
         ret_val = []
         for elt in lts:
             ret_val.append(sage_mon_to_mat(elt,self.PR.m,self.PR.n))
         return ret_val
 
-    def define_m2_vars(self,graded=False,ideal_name="I",ring_name="R"):
+    def def_m2_vars(self,graded=False,ideal_name="I",ring_name="R"):
         """Define the ideal in Macaulay2. After running this command, one can 
         run commands referencing the ideal "I" in Macaulay2.
 
@@ -1543,8 +1527,7 @@ def minors(M,k,B=None):
     :type M: Sage matrix
     :param k: minor size
     :type k: int
-    :param B: submatrix of M, input as [[list of rows of B],[list of columns of B]] (row and column numbers
-    are 0-indexed), defaults to None
+    :param B: submatrix of M, input as [[list of rows of B],[list of columns of B]] (row and column numbers are 0-indexed), defaults to None
     :type B: list, optional
     :return: list of minors
     :rtype: list
@@ -1628,8 +1611,7 @@ def msv(w,region=None,R=None):
 
     :param w: permutation in one-line notation as a list of integers
     :type w: list
-    :param region: list of tuples (i,j) defining a region in which to define the 
-    ideal, defaults to None
+    :param region: list of tuples (i,j) defining a region in which to define the ideal, defaults to None
     :type region: list, optional
     :param R: the ring in which I is to be defined, defaults to None
     :type R: PolRing, optional
@@ -1644,7 +1626,7 @@ def msv(w,region=None,R=None):
         R = PolRing(w.max_row,w.max_col)
 
     def fulton_generator_mats():
-        essSet = w.filled_essential_set()
+        essSet = w.filled_ess_set()
         minors = []
         for box in essSet:
             boxMat = R.Z[[i for i in range(box[0][0]+1)],[j for j in range(box[0][1]+1)]]
