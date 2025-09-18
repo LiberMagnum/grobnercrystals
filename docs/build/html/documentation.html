@@ -104,9 +104,10 @@ to that region.</p>
 </section>
 <section id="filtered-rsk">
 <h2>Filtered RSK<a class="headerlink" href="#filtered-rsk" title="Permalink to this heading">¶</a></h2>
+<p>Grobnercrystals includes a function for computing filteredRSK of a matrix with respect to a given Levi datum.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>These functions take numpy matrices as input.</p>
+<p>This function takes numpy matrices as input.</p>
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="grobnercrystals.filtered_RSK">
@@ -183,12 +184,56 @@ If the result of applying the operator to M is the empty symbol, return None.</p
 </section>
 <section id="polynomial-rings">
 <h2>Polynomial Rings<a class="headerlink" href="#polynomial-rings" title="Permalink to this heading">¶</a></h2>
+<p>Grobnercrystals includes a class for defining a polynomial ring in an m by n matrix of variables.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="grobnercrystals.PolRing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">PolRing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'z'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GRevLex'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.PolRing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="ideals-and-bicrystalline-tests">
 <h2>Ideals and Bicrystalline Tests<a class="headerlink" href="#ideals-and-bicrystalline-tests" title="Permalink to this heading">¶</a></h2>
+<p>Ideals are constructed using the <code class="docutils literal notranslate"><span class="pre">grobnercrystals.BIdeal</span></code> class. Every <code class="docutils literal notranslate"><span class="pre">BIdeal</span></code> is an ideal of a polynomial ring in an m by n matrix of variables, implemented as a <code class="docutils literal notranslate"><span class="pre">PolRing</span></code> object. <code class="docutils literal notranslate"><span class="pre">BIdeal``s</span> <span class="pre">have</span> <span class="pre">a</span> <span class="pre">``.bicrystalline()</span></code> method for checking whether the ideal is bicrystalline</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.bicrystalline()</span></code> method does <em>not</em> check whether the ideal is stable under the given Levi group, only whether the set of its non-standard monomials is closed under all admissible bicrystal operators for that Levi group. See <a href="#id1"><span class="problematic" id="id2">`Group Action Checks`__</span></a>.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">BIdeal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PR</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="interesting-classes-of-ideals">
 <h2>Interesting Classes of Ideals<a class="headerlink" href="#interesting-classes-of-ideals" title="Permalink to this heading">¶</a></h2>
+<p>Grobnercrystals provides functions for defining several ideals of interest.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.shape_ideal">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">shape_ideal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.shape_ideal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.classical_det_ideal">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">classical_det_ideal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.classical_det_ideal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.msv">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">msv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.msv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.mrv">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">mrv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.mrv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The following function is useful for defining various
+determinantal ideals.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.minors">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">minors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.minors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="group-action-checks">
 <h2>Group Action Checks<a class="headerlink" href="#group-action-checks" title="Permalink to this heading">¶</a></h2>
@@ -199,7 +244,7 @@ If the result of applying the operator to M is the empty symbol, return None.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>I</strong> (<em>BIdeal</em>) – The ideal to be checked</p></li>
+<li><p><strong>I</strong> (<a class="reference internal" href="#grobnercrystals.BIdeal" title="grobnercrystals.BIdeal"><em>BIdeal</em></a>) – The ideal to be checked</p></li>
 <li><p><strong>L</strong> (<em>list</em>) – A Levi datum [I,J]</p></li>
 <li><p><strong>detailed_output</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, prints a pair (Gröbner basis element,Gröbner basis element after group action) which fails the check (if such a pair exists), defaults to False</p></li>
 </ul>
@@ -212,6 +257,15 @@ If the result of applying the operator to M is the empty symbol, return None.</p
 </dd>
 </dl>
 </dd></dl>
+
+</section>
+<section id="polynomials-and-schur-expansions">
+<h2>Polynomials and Schur Expansions<a class="headerlink" href="#polynomials-and-schur-expansions" title="Permalink to this heading">¶</a></h2>
+<p>Grobnercrystals includes a special class <code class="docutils literal notranslate"><span class="pre">SplitPoly</span></code> for polynomials in two sets of variables. This class has a <code class="docutils literal notranslate"><span class="pre">.expand()</span></code> method for computing split-Schur expansions of such polynomials.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="grobnercrystals.SplitPoly">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">SplitPoly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">poly</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.SplitPoly" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </section>
@@ -254,11 +308,28 @@ If the result of applying the operator to M is the empty symbol, return None.</p
 <li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.f"><code class="docutils literal notranslate"><span class="pre">f()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#polynomial-rings">Polynomial Rings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ideals-and-bicrystalline-tests">Ideals and Bicrystalline Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#interesting-classes-of-ideals">Interesting Classes of Ideals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#polynomial-rings">Polynomial Rings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.PolRing"><code class="docutils literal notranslate"><span class="pre">PolRing</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ideals-and-bicrystalline-tests">Ideals and Bicrystalline Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.BIdeal"><code class="docutils literal notranslate"><span class="pre">BIdeal</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interesting-classes-of-ideals">Interesting Classes of Ideals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.shape_ideal"><code class="docutils literal notranslate"><span class="pre">shape_ideal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.classical_det_ideal"><code class="docutils literal notranslate"><span class="pre">classical_det_ideal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.msv"><code class="docutils literal notranslate"><span class="pre">msv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.mrv"><code class="docutils literal notranslate"><span class="pre">mrv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.minors"><code class="docutils literal notranslate"><span class="pre">minors()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#group-action-checks">Group Action Checks</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.check_action"><code class="docutils literal notranslate"><span class="pre">check_action()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#polynomials-and-schur-expansions">Polynomials and Schur Expansions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.SplitPoly"><code class="docutils literal notranslate"><span class="pre">SplitPoly</span></code></a></li>
 </ul>
 </li>
 </ul>
