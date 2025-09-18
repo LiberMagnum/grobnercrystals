@@ -239,12 +239,6 @@ class Perm():
         return False
 
     def essential_set(self):
-        """Finds Fulton's essential set.
-
-        :return: Fulton's essential set as a list of indices [(i,j)]
-        :rtype: list
-        """
-
         def FindBoxes(effReg,dots):
             retVal = []
             for box in effReg:
@@ -301,13 +295,6 @@ class Perm():
     
     # returns [[(essential set box), number in that box]]
     def filled_essential_set(self):
-        """Finds Fulton's essential set, together with the rank conditions imposed by 
-        each box in the essential set.
-
-        :return: A list [[essential set box, number in that box]]
-        :rtype: list
-        """
-        
         essSet = self.essential_set()
         dots = [(i,self.perm[i]-1) for i in range(self.max_row+1) if not self.perm[i] > self.max_col]
         retVal = []
@@ -602,22 +589,23 @@ def m2_ungraded_ring_str(varsC,to):
     mStr += varsC[-1] + ', MonomialOrder=>'+to+']'
     return mStr
 
-def m2_graded_ring_str(m,n,varsC,to):
-    weights = []
-    for i in range(m):
-        for j in range(n):
-            cur_weight = [0]*(m+n)
-            cur_weight[i] = 1
-            cur_weight[m+j] = 1
-            weights.append(cur_weight)
-    weightStr = '{'
-    for weight in weights:
-        cur_str = '{'
-        for i in range(len(weight)-1):
-            cur_str += str(weight[i]) + ','
-        cur_str += str(weight[-1])+'},'
-        weightStr += cur_str
-    weightStr = weightStr[:len(weightStr)-1] + '}'
+def m2_graded_ring_str(m,n,weights,varsC,to):
+    if weights is None:
+        weights = []
+        for i in range(m):
+            for j in range(n):
+                cur_weight = [0]*(m+n)
+                cur_weight[i] = 1
+                cur_weight[m+j] = 1
+                weights.append(cur_weight)
+        weightStr = '{'
+        for weight in weights:
+            cur_str = '{'
+            for i in range(len(weight)-1):
+                cur_str += str(weight[i]) + ','
+            cur_str += str(weight[-1])+'},'
+            weightStr += cur_str
+        weightStr = weightStr[:len(weightStr)-1] + '}'
 
     mStr = 'QQ['
     for i in range(len(varsC)-1):
@@ -688,33 +676,15 @@ POLYNOMIALS, POLYNOMIAL RINGS, AND IDEALS
 # X,Y are lists of x and y variables (usually created using VariableGenerator)
 # x,y are lists of strings of x and y variables
 class SplitPoly():
-    """A class for polynomials in two sets of variables ('x' variables and 'y'
-    variables). The rings in which the 'x' and 'y' variables live must be 
-    specified.
-
-    :param poly: the polynomial as an element of a Sage MPolynomialRing
-    :type poly: class 'sage.rings.polynomial.multi_polynomial_libsingular.MPolynomial_libsingular'
-    :param xR: the ring of 'x' variables
-    :type xR: class 'sage.rings.polynomial.multi_polynomial_libsingular.MPolynomialRing_libsingular'
-    :param yR: the ring of 'y' variables
-    :type yR: class 'sage.rings.polynomial.multi_polynomial_libsingular.MPolynomialRing_libsingular'
-
-    :ivar X: the generators of xR (output of xR.gens())
-    :ivar Y: the generators of yR (output of yR.gens())
-    :ivar x: list of strings ['xi'] of 'x' variables
-    :ivar y: list of strings ['yi'] of 'y' variables
-    :ivar deg: degree of the polynomial
-    :ivar d: dictionary for the polynomial of the form {degree : homogeneous component of the polynomial with that degree}
-    """
-
-    def __init__(self,poly,xR,yR):
+    def __init__(self,poly,xR,yR,X=None,Y=None):
         self.poly = poly
         self.R = self.poly.parent()
         self.xR = xR
         self.yR = yR
-        self.X = self.xR.gens()
-        self.Y = self.yR.gens()
+        self.X = X if X is not None else self.xR.gens()
+        self.Y = Y if Y is not None else self.yR.gens()
         self.x = ['x'+str(i) for i in range(len(self.X))]
+        self.schubX = ['x'+str(i) for i in range(max(len(self.X),len(self.Y)))]
         self.y = ['y'+str(i) for i in range(len(self.Y))]
 
         self.deg = self.poly.total_degree()
@@ -729,34 +699,6 @@ class SplitPoly():
     # if not specified, var groups is assumed to be [[len(X variables)],[len(Y variables)]]
     # can instead input a permutation - will take the maximal Levi group
     def expand(self,x=None,y=None,I=[],J=[],returnDict=False,maxIter=10000):
-        """Expands the polynomial into a sum of products of Schur polynomials
-        based on a given Levi datum. If no inputs are given, returns the polynomial. 
-        If the user specifies x='m' or y='m', the corresponding variables will
-        be left as monomials. The default output is a string representing
-        the expansion. Optionally, can output a dictionary of the form {tuple of 
-        partitions, permutations, or exponents : coefficient in the expansion}.
-
-        :param x: What type of polynomial to expand the x variables in ('s' for Schur,
-        'm' for Monomial), defaults to None
-        :type x: str, optional
-        :param y: What type of polynomial to expand the x variables in ('s' for Schur, 
-        'm' for Monomial), defaults to None,
-        :type y: str, optional
-        :param I: Row Levi datum, defaults to []
-        :type I: list, optional
-        :param J: Column Levi datum, defaults to []
-        :type J: list, optional
-        :param returnDict: True to return a dictionary, False to return a string, defaults 
-        to False
-        :type returnDict: bool, optional
-        :param maxIter: Maximum number of subtractions allowed per degree component, 
-        defaults to 10000
-        :type maxIter: int, optional
-        :raises MemoryError: if the number of subtractions exceeds maxIter
-        :return: A string representing the desired expansion (or, optionally, a dictionary)
-        :rtype: str (optionally, dict)
-        """
-
         if (x is None and y is None):
             return self.poly       
         if x is None:
@@ -790,6 +732,21 @@ class SplitPoly():
 
             if tType == 'm':
                 return [[elt for elt in tple]]
+            
+            if tType == 'ss':
+                retVal = []
+                for i in range(len(partList)):
+                    newLs = [elt for elt in partList[i]]
+                    revList = list(reversed(partList[i]))
+                    lastNonZero = next((i for i, x in enumerate(revList) if x), None)
+                    if lastNonZero is not None:
+                        filtLs = revList[lastNonZero:]
+                        for i in range(len(filtLs)):
+                            subVal = revList[lastNonZero+i] - i
+                            if subVal > 0:
+                                newLs += [0]*subVal
+                    retVal.append(sage.combinat.permutation.from_lehmer_code(newLs))
+                return retVal
 
         def tuple_to_poly(tType,ls,ringDict,subVars,rehome,numVars=None,i=None):
             R = ringDict[tType]
@@ -806,15 +763,23 @@ class SplitPoly():
                 m = self.R(m)
                 return m
 
+            elif tType == 'ss':
+                schub = rehome(R(ls).expand())
+                schub = self.R(schub.subs(**subVars))
+                return schub
+
         # s sort: lex, ss sort: revLex
         # sortDict: 'expansion': requires revLex?
         # if any require revLex, then sort by revLex
         sortDict = {'s':False,'ss':True,'m':True}
         ringDict = {'s':SymmetricFunctions(QQ).schur(),
+                    'ss':SchubertPolynomialRing(QQ), 
                     'm':self.R}
         rehomeRingDictX = {'s':PolynomialRing(QQ,names=self.x), 
+                           'ss':PolynomialRing(QQ,names=self.schubX), 
                            'm':self.xR}
         rehomeRingDictY = {'s':PolynomialRing(QQ,names=self.y), 
+                           'ss':PolynomialRing(QQ,names=self.schubX), 
                            'm':self.yR}
 
         xIt = iter(self.X)
@@ -825,10 +790,12 @@ class SplitPoly():
         xAlphabetSubs = [{'x'+str(i):xAlphabet[j][i] for i in range(len(xAlphabet[j]))} for j in range(len(xAlphabet))]
 
         varDictX = {'s':xAlphabetSubs,
+                    'ss':[{str(self.schubX[i]):self.X[i] for i in range(min(len(self.schubX),len(self.X)))}],
                     'm':[self.X],
                     }
 
         varDictY = {'s':yAlphabetSubs,
+                    'ss':[{str(self.schubX[i]):self.Y[i] for i in range(min(len(self.Y),len(self.schubX)))}],
                     'm':[self.Y],
                     }
 
@@ -947,34 +914,18 @@ class SplitPoly():
                 itnum += 1
             return retStr
 
+    def tex_expand(self,x=None,y=None,I=[],J=[],maxIter=10000):
+        sd = self.expand(x=x,y=y,I=[],J=[],returnDict=True,maxIter=maxIter)
+        return tex_print(sd,[datum_to_alphabet(I),datum_to_alphabet(J)])
+
 class PolRing():
-    """Class for polynomial rings in an m by n matrix of variables.
-
-    :param m: number of rows in the matrix of variables
-    :type m: int
-    :param n: number of columns in the matrix of variables
-    :type n: int
-    :param name: variable names, optional, default 'z'
-    :type name: str
-    :param to: Macaulay2 ring term order, optional, default 'GRevLex'
-    :type to: str
-
-    :ivar R: Sage PolynomialRing in an m by n matrix of variables
-    :ivar Z: matrix of variables
-    :ivar xR: Sage PolynomialRing of m 'x' variables x1,...,xm
-    :ivar yR: Sage PolynomialRing of n 'y' variables y1,...,yn
-    :ivar X: generators of xR, output of xR.gens()
-    :ivar Y: generators of yR, output of yR.gens()
-    :ivar graded_m2_str: str containing Macaulay2 command for generating R (with multigrading)
-    :ivar ungraded_m2_str: str containing Macaulay2 command for generating R (no multigrading)  
-    """
-
     # returns a polynomial ring in mxn variables
-    def __init__(self,m,n,name='z',to='GRevLex'):
+    def __init__(self,m,n,name='z',weights=None,to='GRevLex'):
         self.m = m
         self.n = n
         self.vars = var_gen(self.m,self.n,name)
         self.varsM2 = var_gen(self.m,self.n,'m')
+        self.weights = weights
         self.R = PolynomialRing(QQ,names=self.vars)
 
         self.Z = matrix(self.R,np.array(self.vars).reshape(m,n)) 
@@ -987,18 +938,10 @@ class PolRing():
         self.Y = self.yR.gens()
         self.XY = self.xyR.gens()
 
-        self.graded_m2_str = m2_graded_ring_str(m,n,self.vars,to)
+        self.graded_m2_str = m2_graded_ring_str(m,n,weights,self.vars,to)
         self.ungraded_m2_str = m2_ungraded_ring_str(self.vars,to)
 
     def hilbert_series_exp(self,deg):
-        """Returns Hilbert series for R up to specified degree as a SplitPoly object.
-
-        :param deg: degree of the expansion
-        :type deg: int
-        :return: Hilbert series of R up to degree deg
-        :rtype: SplitPoly
-        """
-
         m2.macaulay2.set('R',self.graded_m2_str) 
         h = m2.macaulay2("toString hilbertSeries(R,Order=>"+str(deg)+")").sage()
         p = M2_to_Sage(h,self.XY)
@@ -1007,20 +950,6 @@ class PolRing():
 # Named BIdeal to avoid conflict with Sage objects
 # PR: instance of PolRing
 class BIdeal():
-    """Class for ideals of PolRing objects.
-
-    :param gens: generators of the ideal
-    :type gens: polynomials in PR.R
-    :param PR: ring in which the ideal lives
-    :type PR: PolRing
-
-    :ivar I: ideal of PR.R generated by gens
-    :ivar R: alias of PR.R
-    :ivar X: alias of PR.X
-    :ivar Y: alias of PR.Y
-    :ivar m2_ideal_str: str containing command for defining I in Macaulay2 
-    """
-
     def __init__(self,gens,PR):
         self.gens = gens
         self.PR = PR
@@ -1036,29 +965,11 @@ class BIdeal():
             gens += str(elt)+','
         gens = gens[:len(gens)-1]
         self.m2_ideal_str = "ideal("+gens+")"
+
+        self.init_ideal_computed = False
+        self.used_init_ideal_ids = []
     
     def bicrystalline(self,I,J,use_to=None,detailed_output=False):
-        """Checks whether the ideal is bicrystalline with respect to a given
-        Levi action. Optionally, instead of checking all term orders, one
-        can check a specific term order.
-
-        This function does *not* check whether the ideal is stable under
-        the action of the given Leiv group, or whether it is homogeneous.
-
-        :param I: row Levi datum
-        :type I: list
-        :param J: column Levi datum
-        :type J: list
-        :param use_to: Macaulay2 term order to use, defaults to None
-        :type use_to: list, optional
-        :param detailed_output: when true, outputs details about the checks it
-        makes to the terminal, defaults to False
-        :type detailed_output: bool, optional
-        :return: True if the ideal is bicrystalline (assuming it is homogeneous 
-        and stable under the input Levi group), else False
-        :rtype: bool
-        """
-
         m2.macaulay2.set("R",self.PR.ungraded_m2_str)
         m2.macaulay2.set("I",self.m2_ideal_str)
         
@@ -1188,21 +1099,6 @@ class BIdeal():
     # calculates a test set given (lead terms of a) grobner basis
     # Input: op = ['f' or 'e',i,'r' or 'c'], grobner bases (optional), term order (optional)
     def test_set(self,op,gb=None,to=None):
-        """Outputs a test set for a given bicrystal operator, and optionally
-        a given Grobner basis or term order.
-
-        :param op: bicrystal operator as a list ['f' or 'e',i,'r' or 'c'], 
-        e.g. ['f',1,'r'] for the row lowering operator f1
-        :type op: list
-        :param gb: lead terms of a Grobner basis for I as a list of numpy matrices, 
-        defaults to None
-        :type gb: list, optional
-        :param to: a Macaulay2 term order, defaults to None
-        :type to: str, optional
-        :return: a test set for I as a list of numpy matrices
-        :rtype: list
-        """
-
         dim = self.PR.n if op[2]=='r' else self.PR.m
 
         if gb is None:
@@ -1240,21 +1136,6 @@ class BIdeal():
         return TS.values()
 
     def minimal_test_set(self,op,gb=None,to=None):
-        """Outputs the unique *minimal* test set for a given bicrystal operator,
-        and optionally a given Grobner basis or term order.
-
-        :param op: bicrystal operator as a list ['f' or 'e',i,'r' or 'c'], 
-        e.g. ['f',1,'r'] for the row lowering operator f1
-        :type op: list
-        :param gb: lead terms of a Grobner basis for I as a list of numpy matrices, 
-        defaults to None
-        :type gb: list, optional
-        :param to: a Macaulay2 term order, defaults to None
-        :type to: str, optional
-        :return: the minimal test set for I as a list of numpy matrices
-        :rtype: list
-        """
-
         ts = self.test_set(op,gb,to)
 
         mts = []
@@ -1293,20 +1174,6 @@ class BIdeal():
     # if gens is specified, will create an initial ideal from the given generators
     # if leq=True, will find all non-standard monomials less than or equal to a given degree
     def non_standard_monomials(self,deg,gens=None,leq=False):
-        """Returns all non-standard monomials for I up to a given degree as ring elements.
-
-        :param deg: degree
-        :type deg: int
-        :param gens: optional list of lead terms of generators of the 
-        initial ideal as ring elements, defaults to None
-        :type gens: list, optional
-        :param leq: optionally return all nonstandard monomials of at most input 
-        degree, defaults to False
-        :type leq: bool, optional
-        :return: list of all nonstandard monomials of a given degree as ring elements
-        :rtype: list
-        """
-
         # Make sure that ring and ideal are defined in M2, use ungraded version
         m2.macaulay2.set("R",self.PR.ungraded_m2_str)
         m2.macaulay2.set("I",self.m2_ideal_str)
@@ -1342,20 +1209,6 @@ class BIdeal():
 
 
     def non_standard_monomials_mats(self,deg,gens=None,leq=False):
-        """Returns all non-standard monomials for I up to a given degree as numpy matrices.
-
-        :param deg: degree
-        :type deg: int
-        :param gens: optional list of lead terms of generators of the 
-        initial ideal as ring elements, defaults to None
-        :type gens: list, optional
-        :param leq: optionally return all nonstandard monomials of at most input 
-        degree, defaults to False
-        :type leq: bool, optional
-        :return: list of all nonstandard monomials of a given degree as numpy matrices
-        :rtype: list
-        """
-
         non_std_mons = self.non_standard_monomials(deg,gens=gens,leq=leq)
         ret_val = []
         for elt in non_std_mons:
@@ -1364,16 +1217,8 @@ class BIdeal():
 
     # Uses M2 to compute the Hilbert series
     # Input: degree of the expansion
+    # Optional inputs: weights for the torus action
     def hilbert_series_exp(self,deg):
-        """Computes the Hilbert series expansion of I up to a given degree.
-        The Hilbert series is output as a SplitPol.
-
-        :param deg: degree
-        :type deg: int
-        :return: Hilbert series up to a given degree
-        :rtype: SplitPol
-        """
-
         # Define the ideal in M2
         m2.macaulay2.set("R",self.PR.graded_m2_str)
         m2.macaulay2.set("I",self.m2_ideal_str)
@@ -1384,15 +1229,6 @@ class BIdeal():
         return SplitPoly(pol,self.PR.xR,self.PR.yR)
 
     def gb(self,to=None):
-        """Computes a Grobner basis for the ideal. Optionally, one may specify
-        the term order. The default is the term order of the parent PolRing.
-
-        :param to: Macaulay2 term order, defaults to None
-        :type to: str, optional
-        :return: list of Grobner basis generators as ring elements
-        :rtype: list
-        """
-
         if to is None:
             m2.macaulay2.set("R",self.PR.ungraded_m2_str)
         if to is not None:
@@ -1411,17 +1247,8 @@ class BIdeal():
 
     # Outputs gb for self 
     # Default: antidiagonal term order
+    # TODO: implement optional argument to specify term order
     def gb_lead_terms(self,to=None):
-        """Computes the lead terms of a Grobner basis for the ideal. Optionally, 
-        one may specify the term order. The default is the term order of the 
-        parent PolRing.
-
-        :param to: Macaulay2 term order, defaults to None
-        :type to: str, optional
-        :return: list of lead terms of Grobner basis generators as ring elements
-        :rtype: list
-        """
-
         if to is None:
             m2.macaulay2.set("R",self.PR.ungraded_m2_str)
         if to is not None:
@@ -1440,16 +1267,6 @@ class BIdeal():
         return LTs
 
     def gb_lead_terms_mats(self,to=None):
-        """Computes the lead terms of a Grobner basis for the ideal. Optionally, 
-        one may specify the term order. The default is the term order of the 
-        parent PolRing. The lead terms are output as numpy matrices.
-
-        :param to: Macaulay2 term order, defaults to None
-        :type to: str, optional
-        :return: list of lead terms of Grobner basis generators as numpy matrices
-        :rtype: list
-        """
-
         lts = self.gb_lead_terms(to=to)
         ret_val = []
         for elt in lts:
@@ -1457,17 +1274,6 @@ class BIdeal():
         return ret_val
 
     def define_m2_vars(self,graded=False,ideal_name="I",ring_name="R"):
-        """Define the ideal in Macaulay2. After running this command, one can 
-        run commands referencing the ideal "I" in Macaulay2.
-
-        :param graded: whether the Macaulay2 ideal should be graded, defaults to False
-        :type graded: bool, optional
-        :param ideal_name: what the ideal should be called in Macaulay2, defaults to "I"
-        :type ideal_name: str, optional
-        :param ring_name: what the ring should be called in Macaulay2, defaults to "R"
-        :type ring_name: str, optional
-        """
-
         if graded:
             m2.macaulay2.set(ring_name,self.PR.graded_m2_str)
             m2.macaulay2.set(ideal_name,self.m2_ideal_str)
@@ -1533,23 +1339,128 @@ def check_action(I,L,detailed_output=False):
 '''
 CLASSES OF IDEALS
 '''
+# matrix Schubert variety class with some helpful functions for finding k polynomials and 
+# double grothendiecks
+class MSV():
+    def __init__(self,w,region=None):
+        self.w = Perm(w,region=region)
+        self.region = self.w.region
+        self.I = msv(self.w,region=region)
+        self.PR = self.I.PR
+        self.R = self.I.PR.R
+
+    def grothendieck(self):
+        # Returns support of w as a list
+        def CheckSupport(w):
+            redWord = Permutation(w).reduced_word()
+            return [list(set(redWord)),len(redWord)]
+
+        # Returns triangle for finding grothendieck
+        def CreateTriangle(w,support):
+            n = len(w)
+            # elt of triangle: ((row,col),num)
+            triangle = [[((num-j,j+1),num) for num in support[0] if num in range(j+1,n)] for j in range(n-1)]
+            triangle = triangle[::-1]
+            retVal = []
+            for elt in triangle:
+                retVal += elt
+            return retVal
+
+        def FilterSubsets(support,lsSubsets):
+            retVal = []
+            for elt in lsSubsets:
+                eltLs = [i[1] for i in elt]
+                isContained = all(item in tuple(eltLs) for item in support[0])
+                if isContained:
+                    retVal.append(elt)
+            return retVal
+
+        # Find all subsets of triangle with at least len(redWord) elements
+        def CreateListPossibleWords(triangle,support):
+            retVal = []
+            # Iterate over all possible subsets by length
+            for length in range(support[1],len(triangle)+1):
+                lsSubsets = list(it.combinations(tuple(triangle), length))
+                # Filter out all elements without everything in support
+                retVal += FilterSubsets(support,lsSubsets)
+            return retVal
+
+        def SimpleTransposition(i):
+            ls = [j for j in range(1,i+2)]
+            ls[i-1] = i+1
+            ls[i] = i
+            return ls
+
+        def DemazureProduct(wordLs):
+            retVal = Permutation(SimpleTransposition(wordLs[0]))
+            for i in range(1,len(wordLs)):
+                tempVal = retVal.left_action_product(Permutation(SimpleTransposition(wordLs[i]))) 
+                tempVal = Permutation(tempVal)
+                if tempVal.length() >= retVal.length():
+                    retVal = tempVal
+            return retVal
+
+        # word input as a tuple (((i,j),s_k),...)
+        def CheckIfDemazureWord(w,word):
+            retVal = False
+            wordLs = [elt[1] for elt in word]
+            demProd = DemazureProduct(wordLs)
+            if len(demProd) < len(w):
+                demProd += [len(demProd)+i+1 for i in range(len(w)-len(demProd))]
+
+            if Permutation(demProd) == Permutation(w):
+                retVal = True
+
+            return retVal
+
+        def FindAllDemazureWords(w):
+            support = CheckSupport(w)
+            triangle = CreateTriangle(w,support)
+            possibleWords = CreateListPossibleWords(triangle,support)
+            demazureWords = []
+            for word in possibleWords:
+                if CheckIfDemazureWord(w,word):
+                    demazureWords.append(word)
+            return demazureWords
+
+        def FindBeta(word,initLen):
+            retVal = 1
+            if (len(word) - initLen)%2 == 1:
+                retVal = -1
+            return retVal
+
+        # Compute Grothendieck polynomial in terms of Zij
+        # Check if w is the identity element
+        if self.w.perm == [i+1 for i in range(self.w.l)]:
+            return 1
+
+        initLen = 0
+        retVal = 0
+        demazureWords = FindAllDemazureWords(self.w.perm)
+        for i in range(len(demazureWords)):
+            word = demazureWords[i]
+            if i==0:
+                initLen = len(word)
+            monomial = 1
+            sign = FindBeta(word,initLen)
+            for elt in word:
+                monomial *= self.PR.Z[elt[0][0] - 1,elt[0][1] - 1]
+            retVal += sign*monomial
+
+        return self.R(retVal)
+
+    def k_pol(self):
+        g = self.grothendieck()
+        if str(g).isdigit():
+            return self.PR.xyR(g)
+        
+        zxy_convert = {str(self.PR.Z[i,j]):1-self.PR.XY[i]*self.PR.XY[len(self.PR.X)+j] for (i,j) in it.product(range(len(self.PR.X)),range(len(self.PR.Y)))}
+        retVal = self.PR.xyR(g.subs(**zxy_convert))
+        return SplitPoly(retVal,self.PR.xR,self.PR.yR)
+
 # Input: matrix of variables in some ring, submatrix [[list of rows],[list of columns]], integer k
 # Output: k x k minors of submatrix
 def minors(M,k,B=None):
-    """Outputs the k by k minors of the matrix M of size k. Optionally, outputs
-    the k by k minors of a submatrix B of M, input as [[list of rows of B],[list of columns of B]].
-
-    :param M: matrix
-    :type M: Sage matrix
-    :param k: minor size
-    :type k: int
-    :param B: submatrix of M, input as [[list of rows of B],[list of columns of B]] (row and column numbers
-    are 0-indexed), defaults to None
-    :type B: list, optional
-    :return: list of minors
-    :rtype: list
-    """
-
     if B is None:
         B = [[i for i in range(M.nrows())],[j for j in range(M.ncols())]]
     if k > len(B[0]) or k > len(B[1]):
@@ -1567,21 +1478,6 @@ def minors(M,k,B=None):
     return retVal
 
 def shape_ideal(l,m,n,R=None):
-    """Outputs the BIdeal I generated by all bitableaux of shape l in
-    the polynomial ring in a matrix of m by n variables.
-
-    :param l: a partition, as a decreasing list of integers
-    :type l: list
-    :param m: number of rows of the matrix of variables
-    :type m: int
-    :param n: number of columns of the matrix of variables
-    :type n: int
-    :param R: PolRing in which to define the ideal, defaults to None
-    :type R: PolRing, optional
-    :return: shape ideal I
-    :rtype: BIdeal
-    """
-
     if R is None:
         R = PolRing(m,n)
     gens = all_nonstd_pol_bitabs(l,R)
@@ -1592,18 +1488,6 @@ def shape_ideal(l,m,n,R=None):
 # Input: number of rows, number of columns, size of minor
 # Output: instance of BIdeal
 def classical_det_ideal(m,n,k):
-    """Creates the BIdeal I of k by k minors of an m by n matrix.
-
-    :param m: number of rows in the matrix of variables
-    :type m: int
-    :param n: number of columns in the matrix of variables
-    :type n: int
-    :param k: size of minors
-    :type k: int
-    :return: classical determinantal ideal
-    :rtype: BIdeal
-    """
-
     R = PolRing(m,n)
     gens = minors(R.Z,k)
     I = BIdeal(gens,R)
@@ -1615,28 +1499,6 @@ def classical_det_ideal(m,n,k):
 # Optional input: region = region of variables to use
 # Output: instance of BIdeal
 def msv(w,region=None,R=None):
-    """Creates the BIdeal I defining the matrix Schubert variety corresponding
-    to a permutation w. By default, I is inside a polynomial ring with matrix
-    of variables of size r by c, where r is the last row of the Rothe diagram
-    for w in which Fulton's essential set has an element and c is the last column 
-    of the Rothe diagram for w in which Fulton's essential set has an element. 
-    
-    Optionally, a different region may be specified. The polynomial ring will be 
-    constructed as PolRing(r,c), where r is the greatest i such that (i,j) appears
-    in the input region and c is the greatest j such that (i,j) appears in the 
-    input region.
-
-    :param w: permutation in one-line notation as a list of integers
-    :type w: list
-    :param region: list of tuples (i,j) defining a region in which to define the 
-    ideal, defaults to None
-    :type region: list, optional
-    :param R: the ring in which I is to be defined, defaults to None
-    :type R: PolRing, optional
-    :return: ideal defining the matrix Schubert variety for w
-    :rtype: BIdeal
-    """
-
     if type(w) is list:
         w = Perm(w,region=region)
 
@@ -1661,19 +1523,66 @@ def msv(w,region=None,R=None):
     I = BIdeal(fulton_generators(),R)
     return I
 
+# input: adjacency matrix (#rows = #vertices, #cols=#edges)
+# output: graphical matroid ideal
+def graphical_matroid(adj,detailed_output=False,fake=False):
+    # initialize polynomial ring
+    R = PolRing(adj.nrows(),adj.ncols())
+
+    # compute all "closed" rank conditions
+    genls = []
+    for i in range(1,min(adj.ncols()+1,adj.nrows()+1)):
+        for colls in it.combinations(list(range(adj.ncols())),i):
+            if all([adj[rowls,colls].determinant()==0 for rowls in it.combinations(list(range(adj.nrows())),i)]):
+                genls.append([colls,i])
+
+    gens = []
+    for [colls,i] in genls:
+        gens += minors(R.Z[list(range(adj.nrows())),colls],i)
+
+    # check if there are any closed conditions
+    if gens==[]:
+        print("No closed conditions, ideal is empty")
+        return None
+
+    # initialize ideal
+    I = BIdeal(gens,R)
+
+    if fake:
+        return I
+
+    if not fake:
+        # compute primary decomposition
+        I.define_m2_vars()
+
+        if detailed_output:
+            print("Computing primary decomposition")
+
+        m2.macaulay2.set("p","primaryDecomposition I")
+        num_ideals = int(m2.macaulay2("#p").sage())
+
+        # if there is only one, return that ideal.
+        if num_ideals==1:
+            return M2_ideal_to_Sage("p#0",R)
+
+        if detailed_output:
+            print("Checking which component contains input matrix")
+
+        # otherwise, figure out which one contains the input matrix
+        for i in range(num_ideals):
+            cur_ideal = M2_ideal_to_Sage("p#"+str(i),R)
+            gen_evals = []
+            for gen in cur_ideal.gens:
+                gen_eval = gen.subs({R.Z[i,j]:adj[i,j] for i in range(adj.nrows()) for j in range(adj.col())})
+                gen_evals.append(gen_eval)
+            if all([thing==0 for thing in gen_evals]):
+                return cur_ideal
+
+        print("Something went wrong - the input matrix is not contained in any element of the primary decomposition")
+        return False
+
 # matrix Richardson ideal
 def mrv(u,v):
-    """Constructs the matrix Richardson ideal corresponding to input
-    permutations u and v.
-
-    :param u: a permutation in one-line notation as a list of integers
-    :type u: list
-    :param v: a permutation in one-line notation as a list of integers
-    :type v: list
-    :return: the matrix Richardson ideal corresponding to u and v
-    :rtype: BIdeal
-    """
-
     d = max(len(u),len(v))
     R = PolRing(d,d)
     Iu = msv(u,R=R)
@@ -1790,3 +1699,90 @@ def is_nonstd(gens,check_mat):
         if np.min(check_mat-gen) >= 0:
             return True
     return False
+
+'''
+PRETTY OUTPUT
+'''
+
+def tex_print(schurDict,gps,yTab=True):
+    retVal = ''
+    keyLs = [eval(elt) for elt in schurDict.keys()]
+    keyLs = reversed(keyLs)
+    numX = len(gps[0])
+    numY = len(gps[1])
+
+    for poly in keyLs:
+        coeff = schurDict[str(poly)]
+        if coeff==1:
+            retVal += 's_{('
+        if coeff==0:
+            continue
+        if coeff < 0:
+            retVal = retVal[:len(retVal)-2]
+            if coeff != -1:
+                retVal += '- '+ str(abs(coeff)) + 's_{('
+            if coeff == -1:
+                retVal += '- ' + 's_{('
+        if coeff > 1:
+            retVal += str(coeff) + 's_{('
+        for i in range(numX):
+            if yTab:
+                retVal += tex_print_partition_y_tab(poly[0][i])
+            if not yTab:
+                retVal += tex_print_partition(poly[0][i])
+            if not i==numX-1:
+                retVal += ','
+            else:
+                retVal += ')}({\\bf x})'
+        retVal += 's_{('
+        for j in range(numY):
+            if yTab:
+                retVal += tex_print_partition_y_tab(poly[1][j])
+            if not yTab:
+                retVal += tex_print_partition(poly[1][j])
+            if not j==numY-1:
+                retVal += ','
+            else:
+                retVal += ')}({\\bf y}) + '
+
+    return retVal[:len(retVal)-3]
+
+def tex_print_partition(par):
+	par = [k for k in par if not k==0]
+	retVal = '\stableau{'
+	for j in range(len(par)):
+		elt = par[j]
+		for i in range(elt):
+			if not i==elt-1:
+				retVal += '\phantom{} &'
+			else:
+				if not j==len(par)-1:
+					retVal += '\phantom{} \\\\ '
+				else:
+					retVal += '\phantom{}}'
+	if par==[]:
+		retVal = '\emptyset'
+	return retVal
+
+def tex_print_partition_y_tab(par):
+	par = [k for k in par if not k==0]
+	retVal = '\ydiagram{'
+	for i in range(len(par)):
+		retVal += str(par[i])
+		if not i==len(par)-1:
+			retVal += ','
+		if i==len(par)-1:
+			retVal += '}'
+	if par==[]:
+		retVal = '\emptyset'
+	return retVal
+
+def pretty_print(schurDict):
+    retVal = ''
+    for key in schurDict:
+        retVal += str(schurDict[key]) + '*'
+        keyList = eval(key)
+        for i in range(len(keyList)):
+            retVal += 'S' + str(i + 1) + str(keyList[i])
+        retVal += ' + '
+    return retVal[:len(retVal) - 3]
