@@ -5,3 +5,6 @@ SOURCES.txt
 top_level.txt 
 grobnercrystals.egg-info
 dist/
+build/
+grobnercrystals-1.1/
+grobnercrystals-1.1.2/

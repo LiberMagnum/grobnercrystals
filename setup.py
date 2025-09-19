@@ -1,10 +1,9 @@
 #!/usr/bin/env sage
 from setuptools import setup # type: ignore
-from grobnercrystals import __version__
 
 setup(
     name='grobnercrystals',
-    version=__version__,
+    version='1.1.2',
     description='A SageMath package for working with Gröbner crystal structures',
 
     url='https://github.com/LiberMagnum/grobnercrystals',

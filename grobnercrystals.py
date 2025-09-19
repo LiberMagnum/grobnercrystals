@@ -1,6 +1,4 @@
 #!/usr/bin/env sage
-__version__ = 1.0
-
 # imports
 import sage.all # type: ignore
 import operator
