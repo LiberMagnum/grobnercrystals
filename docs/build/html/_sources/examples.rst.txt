@@ -1,7 +1,7 @@
 Examples
 ========
 
-This section includes the computations for various examples from the paper. To follow along, first run the following (in a Sage shell):
+This section contains computations for various examples from the paper. To follow along, first run the following (in a Sage shell):
 
 >>> import grobnercrystals as gcs
 
@@ -208,3 +208,58 @@ Not bicrystalline (row raising operator 2):
 Ideal is not bicrystalline for this term order: Lex
 False
 
+Example 6.20 (matrix matroid ideal, continued)
+----------------------------------------------
+
+First, define ``I`` and ``R``:
+
+>>> R = gcs.PolRing(2,6)
+>>> gens = gcs.minors(R.Z[[0,1],[0,1,2]],2) + gcs.minors(R.Z[[0,1],[3,4]],2) + gcs.minors(R.Z[[0,1],[5]],1)
+>>> gens
+>>> [-z12*z21 + z11*z22, -z13*z21 + z11*z23, -z13*z22 + z12*z23,-z15*z24 + z14*z25, z16, z26]
+>>> I = gcs.BIdeal(gens,R)
+
+We can see the first few terms in the character by running:
+
+>>> L = [[0,2],[0,1,2,3,4,5,6]]
+>>> hilb = I.hilb_exp(3)
+>>> hilb.expand(x='s',y='s',I=L[0],J=L[1])
+'1*s[2, 0]s[2]s[0]s[0]s[0]s[0]s[0] + 1*s[2, 0]s[1]s[1]s[0]s[0]s[0]s[0] + 1*s[2, 0]s[1]s[0]s[1]s[0]s[0]s[0] + 1*s[2, 0]s[1]s[0]s[0]s[1]s[0]s[0] + 1*s[2, 0]s[1]s[0]s[0]s[0]s[1]s[0] + 1*s[2, 0]s[0]s[2]s[0]s[0]s[0]s[0] + 1*s[2, 0]s[0]s[1]s[1]s[0]s[0]s[0] + 1*s[2, 0]s[0]s[1]s[0]s[1]s[0]s[0] + 1*s[2, 0]s[0]s[1]s[0]s[0]s[1]s[0] + 1*s[2, 0]s[0]s[0]s[2]s[0]s[0]s[0] + 1*s[1, 1]s[1]s[0]s[0]s[1]s[0]s[0] + 1*s[1, 1]s[1]s[0]s[0]s[0]s[1]s[0] + 1*s[1, 1]s[0]s[1]s[0]s[1]s[0]s[0] + 1*s[2, 0]s[0]s[0]s[1]s[1]s[0]s[0] + 1*s[1, 1]s[0]s[1]s[0]s[0]s[1]s[0] + 1*s[1, 1]s[0]s[0]s[1]s[1]s[0]s[0] + 1*s[2, 0]s[0]s[0]s[1]s[0]s[1]s[0] + 1*s[2, 0]s[0]s[0]s[0]s[2]s[0]s[0] + 1*s[1, 1]s[0]s[0]s[1]s[0]s[1]s[0] + 1*s[2, 0]s[0]s[0]s[0]s[1]s[1]s[0] + 1*s[2, 0]s[0]s[0]s[0]s[0]s[2]s[0] + 1*s[1, 0]s[1]s[0]s[0]s[0]s[0]s[0] + 1*s[1, 0]s[0]s[1]s[0]s[0]s[0]s[0] + 1*s[1, 0]s[0]s[0]s[1]s[0]s[0]s[0] + 1*s[1, 0]s[0]s[0]s[0]s[1]s[0]s[0] + 1*s[1, 0]s[0]s[0]s[0]s[0]s[1]s[0] + 1*s[0, 0]s[0]s[0]s[0]s[0]s[0]s[0]'
+
+We could get the same expansion in a slightly more readable form by specifying that the 'y' variables may be left as monomials:
+
+>>> hilb.expand(x='s',y='m',I=L[0],J=L[1])
+'1*s[2, 0]m[2, 0, 0, 0, 0, 0] + 1*s[2, 0]m[1, 1, 0, 0, 0, 0] + 1*s[2, 0]m[1, 0, 1, 0, 0, 0] + 1*s[2, 0]m[1, 0, 0, 1, 0, 0] + 1*s[2, 0]m[1, 0, 0, 0, 1, 0] + 1*s[2, 0]m[0, 2, 0, 0, 0, 0] + 1*s[2, 0]m[0, 1, 1, 0, 0, 0] + 1*s[2, 0]m[0, 1, 0, 1, 0, 0] + 1*s[2, 0]m[0, 1, 0, 0, 1, 0] + 1*s[2, 0]m[0, 0, 2, 0, 0, 0] + 1*s[1, 1]m[1, 0, 0, 1, 0, 0] + 1*s[1, 1]m[1, 0, 0, 0, 1, 0] + 1*s[1, 1]m[0, 1, 0, 1, 0, 0] + 1*s[2, 0]m[0, 0, 1, 1, 0, 0] + 1*s[1, 1]m[0, 1, 0, 0, 1, 0] + 1*s[1, 1]m[0, 0, 1, 1, 0, 0] + 1*s[2, 0]m[0, 0, 1, 0, 1, 0] + 1*s[2, 0]m[0, 0, 0, 2, 0, 0] + 1*s[1, 1]m[0, 0, 1, 0, 1, 0] + 1*s[2, 0]m[0, 0, 0, 1, 1, 0] + 1*s[2, 0]m[0, 0, 0, 0, 2, 0] + 1*s[1, 0]m[1, 0, 0, 0, 0, 0] + 1*s[1, 0]m[0, 1, 0, 0, 0, 0] + 1*s[1, 0]m[0, 0, 1, 0, 0, 0] + 1*s[1, 0]m[0, 0, 0, 1, 0, 0] + 1*s[1, 0]m[0, 0, 0, 0, 1, 0] + 1*s[0, 0]m[0, 0, 0, 0, 0, 0, 0, 0]'
+
+Here, for instance, ``m[2,0,0,0,0,0]`` refers to the monomial :math:`y_1^2`.
+
+We can see the non-standard monomials of ``I`` under 'GRevLex' by running:
+
+>>> N = I.nstd_mons(2)
+>>> N
+[z11*z16, z12*z16, z13*z16, z14*z16, z15*z16, z16^2, z16*z21, z16*z22, z16*z23, z16*z24, z16*z25, z16*z26, z12*z21, z13*z21, z13*z22, z15*z24, z11*z26, z12*z26, z13*z26, z14*z26, z15*z26, z21*z26, z22*z26, z23*z26, z24*z26, z25*z26, z26^2]
+
+We can also get the non-standard monomials of ``I`` as numpy arrays. 
+
+>>> NMat = I.nstd_mons_mats(4)
+>>> NMat[0]
+>>> array([[3, 0, 0, 0, 0, 1],
+       [0, 0, 0, 0, 0, 0]])
+
+We can use Sage's ``RSK`` function to see that, for instance:
+
+>>> [P,Q] = RSK(NMat[0].transpose())
+>>> P
+[[1, 1, 1, 1]]
+>>> Q
+[[1, 1, 1, 6]]
+
+Since ``Q`` contains a 6, it violates condition (I) in this example.
+
+.. note::
+
+    Sage's conventions for ``RSK`` differ from our conventions. For a matrix ``M``, if you run 
+
+    >>> [P,Q] = RSK(M)
+
+    in Sage, ``P`` is what we would call in our notation the :math:`Q` tableau. This is why, in the example above, we took the transpose of ``NMat[0]`` before applying ``RSK``. 
