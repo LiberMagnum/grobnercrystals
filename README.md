@@ -1,6 +1,6 @@
 # Summary
 
-This repository contains SageMath code for working with *Gröbner crystal structures*, introduced in (insert paper link here).
+This repository contains SageMath code for working with *Gröbner crystal structures*.
 
 ## Dependencies
 
@@ -11,4 +11,18 @@ This repository contains SageMath code for working with *Gröbner crystal struct
 
 ## Installation
 
+To install grobnercrystals, run the following in a terminal:
+
+```terminal
+sage --pip install grobnercrystals
+```
+
+Alternatively, run:
+
+```terminal
+sage --pip install git+https://github.com/LiberMagnum/grobnercrystals.git#egg=grobnercrystals
+```
+
 ## Documentation
+
+Documentation and examples are available at [this website](https://libermagnum.github.io/grobnercrystals/).
