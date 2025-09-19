@@ -10,7 +10,11 @@ To use grobnercrystals, first install it using pip:
 
    $  sage --pip install grobnercrystals
 
-Alternatively, grobnercrystals may be installed using 
+Alternatively, grobnercrystals may be installed by running:
+
+.. code-block:: console
+
+    $ sage --pip install git+https://github.com/LiberMagnum/grobnercrystals.git#egg=grobnercrystals
 
 The package can then be imported at the beginning of any SageMath script:
 
