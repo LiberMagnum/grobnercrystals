@@ -1,48 +1,149 @@
 
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation &mdash; grobnercrystals 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=0a291c44" />
 
-    <title>Documentation &#8212; grobnercrystals 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Examples" href="examples.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+    <link rel="prev" title="Examples" href="examples.html" /> 
+</head>
 
-  </head><body>
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
           
+          
+          <a href="index.html" class="icon icon-home">
+            grobnercrystals
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#permutations">Permutations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.Perm"><code class="docutils literal notranslate"><span class="pre">Perm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.Perm.eff_reg"><code class="docutils literal notranslate"><span class="pre">Perm.eff_reg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.Perm.ess_set"><code class="docutils literal notranslate"><span class="pre">Perm.ess_set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.Perm.filled_ess_set"><code class="docutils literal notranslate"><span class="pre">Perm.filled_ess_set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.Perm.levi_datum"><code class="docutils literal notranslate"><span class="pre">Perm.levi_datum()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#filtered-rsk">Filtered RSK</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.filtered_RSK"><code class="docutils literal notranslate"><span class="pre">filtered_RSK()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#crystal-operators-on-matrices">Crystal Operators on Matrices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.e"><code class="docutils literal notranslate"><span class="pre">e()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.f"><code class="docutils literal notranslate"><span class="pre">f()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#polynomial-rings">Polynomial Rings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.PolRing"><code class="docutils literal notranslate"><span class="pre">PolRing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.PolRing.hilb_exp"><code class="docutils literal notranslate"><span class="pre">PolRing.hilb_exp()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ideals-and-bicrystalline-tests">Ideals and Bicrystalline Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.BIdeal"><code class="docutils literal notranslate"><span class="pre">BIdeal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.bicrystalline"><code class="docutils literal notranslate"><span class="pre">BIdeal.bicrystalline()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.def_m2_vars"><code class="docutils literal notranslate"><span class="pre">BIdeal.def_m2_vars()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.gb"><code class="docutils literal notranslate"><span class="pre">BIdeal.gb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.gb_lts"><code class="docutils literal notranslate"><span class="pre">BIdeal.gb_lts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.gb_lts_mats"><code class="docutils literal notranslate"><span class="pre">BIdeal.gb_lts_mats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.hilb_exp"><code class="docutils literal notranslate"><span class="pre">BIdeal.hilb_exp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.min_test_set"><code class="docutils literal notranslate"><span class="pre">BIdeal.min_test_set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.nstd_mons"><code class="docutils literal notranslate"><span class="pre">BIdeal.nstd_mons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.nstd_mons_mats"><code class="docutils literal notranslate"><span class="pre">BIdeal.nstd_mons_mats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.BIdeal.test_set"><code class="docutils literal notranslate"><span class="pre">BIdeal.test_set()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interesting-classes-of-ideals">Interesting Classes of Ideals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.shape_ideal"><code class="docutils literal notranslate"><span class="pre">shape_ideal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.classical_det_ideal"><code class="docutils literal notranslate"><span class="pre">classical_det_ideal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.msv"><code class="docutils literal notranslate"><span class="pre">msv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.mrv"><code class="docutils literal notranslate"><span class="pre">mrv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.minors"><code class="docutils literal notranslate"><span class="pre">minors()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#group-action-checks">Group Action Checks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.check_action"><code class="docutils literal notranslate"><span class="pre">check_action()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#polynomials-and-schur-expansions">Polynomials and Schur Expansions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.SplitPoly"><code class="docutils literal notranslate"><span class="pre">SplitPoly</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.SplitPoly.expand"><code class="docutils literal notranslate"><span class="pre">SplitPoly.expand()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-          <div class="body" role="main">
-            
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">grobnercrystals</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/documentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="documentation">
-<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">¶</a></h1>
+<h1>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h1>
 <section id="permutations">
-<h2>Permutations<a class="headerlink" href="#permutations" title="Permalink to this heading">¶</a></h2>
+<h2>Permutations<a class="headerlink" href="#permutations" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">grobnercrystals.Perm</span></code> class is a class for permutations which includes useful methods
 for working with matrix Schubert varieties:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="grobnercrystals.Perm">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">Perm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">perm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">Perm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">perm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm" title="Link to this definition"></a></dt>
 <dd><p>A class for permutations</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -69,7 +170,7 @@ usual instead of effective matrix Schubert varieties)</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="grobnercrystals.Perm.eff_reg">
-<span class="sig-name descname"><span class="pre">eff_reg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retMaxDim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm.eff_reg" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">eff_reg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retMaxDim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm.eff_reg" title="Link to this definition"></a></dt>
 <dd><p>Calculates the effective region of the permutation, i.e.
 the set of all tuples (i,j) so that (i,j) is weakly northwest of the
 southeast most box in the Rothe diagram for the permutation.</p>
@@ -81,8 +182,37 @@ southeast most box in the Rothe diagram for the permutation.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.Perm.ess_set">
+<span class="sig-name descname"><span class="pre">ess_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm.ess_set" title="Link to this definition"></a></dt>
+<dd><p>Finds Fulton’s essential set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Fulton’s essential set as a list of indices [(i,j)]</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.Perm.filled_ess_set">
+<span class="sig-name descname"><span class="pre">filled_ess_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm.filled_ess_set" title="Link to this definition"></a></dt>
+<dd><p>Finds Fulton’s essential set, together with the rank conditions imposed by 
+each box in the essential set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list [[essential set box, number in that box]]</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="grobnercrystals.Perm.levi_datum">
-<span class="sig-name descname"><span class="pre">levi_datum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm.levi_datum" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">levi_datum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.Perm.levi_datum" title="Link to this definition"></a></dt>
 <dd><p>Finds the Levi datum corresponding to the largest Levi
 group which acts on the effective matrix Schubert variety 
 corresponding to the permutation. If a region is specified,
@@ -103,14 +233,15 @@ to that region.</p>
 
 </section>
 <section id="filtered-rsk">
-<h2>Filtered RSK<a class="headerlink" href="#filtered-rsk" title="Permalink to this heading">¶</a></h2>
+<h2>Filtered RSK<a class="headerlink" href="#filtered-rsk" title="Link to this heading"></a></h2>
+<p>Grobnercrystals includes a function for computing filteredRSK of a matrix with respect to a given Levi datum.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>These functions take numpy matrices as input.</p>
+<p>This function takes numpy matrices as input.</p>
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="grobnercrystals.filtered_RSK">
-<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">filtered_RSK</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.filtered_RSK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">filtered_RSK</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.filtered_RSK" title="Link to this definition"></a></dt>
 <dd><p>Returns the result of applying filteredRSK to a matrix for a given Levi datum.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -131,14 +262,14 @@ to that region.</p>
 
 </section>
 <section id="crystal-operators-on-matrices">
-<h2>Crystal Operators on Matrices<a class="headerlink" href="#crystal-operators-on-matrices" title="Permalink to this heading">¶</a></h2>
+<h2>Crystal Operators on Matrices<a class="headerlink" href="#crystal-operators-on-matrices" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>These functions take numpy matrices as input.</p>
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="grobnercrystals.e">
-<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.e" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.e" title="Link to this definition"></a></dt>
 <dd><p>Raising matrix crystal operator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -160,7 +291,7 @@ If the result of applying the operator to M is the empty symbol, return None.</p
 
 <dl class="py function">
 <dt class="sig sig-object py" id="grobnercrystals.f">
-<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">f</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.f" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">f</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.f" title="Link to this definition"></a></dt>
 <dd><p>Lowering matrix crystal operator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -182,24 +313,418 @@ If the result of applying the operator to M is the empty symbol, return None.</p
 
 </section>
 <section id="polynomial-rings">
-<h2>Polynomial Rings<a class="headerlink" href="#polynomial-rings" title="Permalink to this heading">¶</a></h2>
+<h2>Polynomial Rings<a class="headerlink" href="#polynomial-rings" title="Link to this heading"></a></h2>
+<p>Grobnercrystals includes a class for defining a polynomial ring in an m by n matrix of variables.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="grobnercrystals.PolRing">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">PolRing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'z'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GRevLex'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.PolRing" title="Link to this definition"></a></dt>
+<dd><p>Class for polynomial rings in an m by n matrix of variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> (<em>int</em>) – number of rows in the matrix of variables</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of columns in the matrix of variables</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – variable names, optional, default ‘z’</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – Macaulay2 ring term order, optional, default ‘GRevLex’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>R</strong> – Sage PolynomialRing in an m by n matrix of variables</p></li>
+<li><p><strong>Z</strong> – matrix of variables</p></li>
+<li><p><strong>xR</strong> – Sage PolynomialRing of m ‘x’ variables x1,…,xm</p></li>
+<li><p><strong>yR</strong> – Sage PolynomialRing of n ‘y’ variables y1,…,yn</p></li>
+<li><p><strong>X</strong> – generators of xR, output of xR.gens()</p></li>
+<li><p><strong>Y</strong> – generators of yR, output of yR.gens()</p></li>
+<li><p><strong>graded_m2_str</strong> – str containing Macaulay2 command for generating R (with multigrading)</p></li>
+<li><p><strong>ungraded_m2_str</strong> – str containing Macaulay2 command for generating R (no multigrading)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.PolRing.hilb_exp">
+<span class="sig-name descname"><span class="pre">hilb_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.PolRing.hilb_exp" title="Link to this definition"></a></dt>
+<dd><p>Returns Hilbert series for R up to specified degree as a SplitPoly object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>deg</strong> (<em>int</em>) – degree of the expansion</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Hilbert series of R up to degree deg</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#grobnercrystals.SplitPoly" title="grobnercrystals.SplitPoly">SplitPoly</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="ideals-and-bicrystalline-tests">
-<h2>Ideals and Bicrystalline Tests<a class="headerlink" href="#ideals-and-bicrystalline-tests" title="Permalink to this heading">¶</a></h2>
+<h2>Ideals and Bicrystalline Tests<a class="headerlink" href="#ideals-and-bicrystalline-tests" title="Link to this heading"></a></h2>
+<p>Ideals are constructed using the <code class="docutils literal notranslate"><span class="pre">grobnercrystals.BIdeal</span></code> class. Every <code class="docutils literal notranslate"><span class="pre">BIdeal</span></code> is an ideal of a polynomial ring in an m by n matrix of variables, implemented as a <code class="docutils literal notranslate"><span class="pre">PolRing</span></code> object. This class has a <code class="docutils literal notranslate"><span class="pre">.bicrystalline()</span></code> method for checking whether the ideal is bicrystalline</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.bicrystalline()</span></code> method does <em>not</em> check whether the ideal is stable under the given Levi group, only whether the set of its non-standard monomials is closed under all admissible bicrystal operators for that Levi group. See <a class="reference internal" href="#group-actions"><span class="std std-ref">Group Action Checks</span></a>.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">BIdeal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PR</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal" title="Link to this definition"></a></dt>
+<dd><p>Class for ideals of PolRing objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gens</strong> (<em>polynomials in PR.R</em>) – generators of the ideal</p></li>
+<li><p><strong>PR</strong> (<a class="reference internal" href="#grobnercrystals.PolRing" title="grobnercrystals.PolRing"><em>PolRing</em></a>) – ring in which the ideal lives</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>I</strong> – ideal of PR.R generated by gens</p></li>
+<li><p><strong>R</strong> – alias of PR.R</p></li>
+<li><p><strong>X</strong> – alias of PR.X</p></li>
+<li><p><strong>Y</strong> – alias of PR.Y</p></li>
+<li><p><strong>m2_ideal_str</strong> – str containing command for defining I in Macaulay2</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.bicrystalline">
+<span class="sig-name descname"><span class="pre">bicrystalline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">I</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailed_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.bicrystalline" title="Link to this definition"></a></dt>
+<dd><p>Checks whether the ideal is bicrystalline with respect to a given
+Levi action. Optionally, instead of checking all term orders, one
+can check a specific term order. This function does <em>not</em> check whether the ideal 
+is stable under the action of the given Leiv group, or whether it is homogeneous.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>I</strong> (<em>list</em>) – row Levi datum</p></li>
+<li><p><strong>J</strong> (<em>list</em>) – column Levi datum</p></li>
+<li><p><strong>use_to</strong> (<em>list</em><em>, </em><em>optional</em>) – Macaulay2 term order to use, defaults to None</p></li>
+<li><p><strong>detailed_output</strong> (<em>bool</em><em>, </em><em>optional</em>) – when true, outputs details about the checks it makes to the terminal, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the ideal is bicrystalline (assuming it is homogeneous and stable under the input Levi group), else False</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.def_m2_vars">
+<span class="sig-name descname"><span class="pre">def_m2_vars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graded</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ideal_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'I'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ring_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'R'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.def_m2_vars" title="Link to this definition"></a></dt>
+<dd><p>Define the ideal in Macaulay2. After running this command, one can 
+run commands referencing the ideal “I” in Macaulay2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graded</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether the Macaulay2 ideal should be graded, defaults to False</p></li>
+<li><p><strong>ideal_name</strong> (<em>str</em><em>, </em><em>optional</em>) – what the ideal should be called in Macaulay2, defaults to “I”</p></li>
+<li><p><strong>ring_name</strong> (<em>str</em><em>, </em><em>optional</em>) – what the ring should be called in Macaulay2, defaults to “R”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.gb">
+<span class="sig-name descname"><span class="pre">gb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.gb" title="Link to this definition"></a></dt>
+<dd><p>Computes a Grobner basis for the ideal. Optionally, one may specify
+the term order. The default is the term order of the parent PolRing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>to</strong> (<em>str</em><em>, </em><em>optional</em>) – Macaulay2 term order, defaults to None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of Grobner basis generators as ring elements</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.gb_lts">
+<span class="sig-name descname"><span class="pre">gb_lts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.gb_lts" title="Link to this definition"></a></dt>
+<dd><p>Computes the lead terms of a Grobner basis for the ideal. Optionally, 
+one may specify the term order. The default is the term order of the 
+parent PolRing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>to</strong> (<em>str</em><em>, </em><em>optional</em>) – Macaulay2 term order, defaults to None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of lead terms of Grobner basis generators as ring elements</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.gb_lts_mats">
+<span class="sig-name descname"><span class="pre">gb_lts_mats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.gb_lts_mats" title="Link to this definition"></a></dt>
+<dd><p>Computes the lead terms of a Grobner basis for the ideal. Optionally, 
+one may specify the term order. The default is the term order of the 
+parent PolRing. The lead terms are output as numpy matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>to</strong> (<em>str</em><em>, </em><em>optional</em>) – Macaulay2 term order, defaults to None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of lead terms of Grobner basis generators as numpy matrices</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.hilb_exp">
+<span class="sig-name descname"><span class="pre">hilb_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.hilb_exp" title="Link to this definition"></a></dt>
+<dd><p>Computes the Hilbert series expansion of I up to a given degree.
+The Hilbert series is output as a SplitPol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>deg</strong> (<em>int</em>) – degree</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Hilbert series up to a given degree</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SplitPol</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.min_test_set">
+<span class="sig-name descname"><span class="pre">min_test_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">op</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.min_test_set" title="Link to this definition"></a></dt>
+<dd><p>Outputs the unique <em>minimal</em> test set for a given bicrystal operator,
+and optionally a given Grobner basis or term order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>op</strong> (<em>list</em>) – bicrystal operator as a list [‘f’ or ‘e’,i,’r’ or ‘c’], e.g. [‘f’,1,’r’] for the row lowering operator f1</p></li>
+<li><p><strong>gb</strong> (<em>list</em><em>, </em><em>optional</em>) – lead terms of a Grobner basis for I as a list of numpy matrices, defaults to None</p></li>
+<li><p><strong>to</strong> (<em>str</em><em>, </em><em>optional</em>) – a Macaulay2 term order, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the minimal test set for I as a list of numpy matrices</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.nstd_mons">
+<span class="sig-name descname"><span class="pre">nstd_mons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.nstd_mons" title="Link to this definition"></a></dt>
+<dd><p>Returns all non-standard monomials for I up to a given degree as ring elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deg</strong> (<em>int</em>) – degree</p></li>
+<li><p><strong>gens</strong> (<em>list</em><em>, </em><em>optional</em>) – optional list of lead terms of generators of the initial ideal as ring elements, defaults to None</p></li>
+<li><p><strong>leq</strong> (<em>bool</em><em>, </em><em>optional</em>) – optionally return all nonstandard monomials of at most input degree, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of all nonstandard monomials of a given degree as ring elements</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.nstd_mons_mats">
+<span class="sig-name descname"><span class="pre">nstd_mons_mats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.nstd_mons_mats" title="Link to this definition"></a></dt>
+<dd><p>Returns all non-standard monomials for I up to a given degree as numpy matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deg</strong> (<em>int</em>) – degree</p></li>
+<li><p><strong>gens</strong> (<em>list</em><em>, </em><em>optional</em>) – optional list of lead terms of generators of the initial ideal as ring elements, defaults to None</p></li>
+<li><p><strong>leq</strong> (<em>bool</em><em>, </em><em>optional</em>) – optionally return all nonstandard monomials of at most input degree, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of all nonstandard monomials of a given degree as numpy matrices</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.BIdeal.test_set">
+<span class="sig-name descname"><span class="pre">test_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">op</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.BIdeal.test_set" title="Link to this definition"></a></dt>
+<dd><p>Outputs a test set for a given bicrystal operator, and optionally
+a given Grobner basis or term order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>op</strong> (<em>list</em>) – bicrystal operator as a list [‘f’ or ‘e’,i,’r’ or ‘c’], e.g. [‘f’,1,’r’] for the row lowering operator f1</p></li>
+<li><p><strong>gb</strong> (<em>list</em><em>, </em><em>optional</em>) – lead terms of a Grobner basis for I as a list of numpy matrices, defaults to None</p></li>
+<li><p><strong>to</strong> (<em>str</em><em>, </em><em>optional</em>) – a Macaulay2 term order, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a test set for I as a list of numpy matrices</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="interesting-classes-of-ideals">
-<h2>Interesting Classes of Ideals<a class="headerlink" href="#interesting-classes-of-ideals" title="Permalink to this heading">¶</a></h2>
+<h2>Interesting Classes of Ideals<a class="headerlink" href="#interesting-classes-of-ideals" title="Link to this heading"></a></h2>
+<p>Grobnercrystals provides functions for defining several ideals of interest.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.shape_ideal">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">shape_ideal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.shape_ideal" title="Link to this definition"></a></dt>
+<dd><p>Outputs the BIdeal I generated by all bitableaux of shape l in
+the polynomial ring in a matrix of m by n variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l</strong> (<em>list</em>) – a partition, as a decreasing list of integers</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – number of rows of the matrix of variables</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of columns of the matrix of variables</p></li>
+<li><p><strong>R</strong> (<a class="reference internal" href="#grobnercrystals.PolRing" title="grobnercrystals.PolRing"><em>PolRing</em></a><em>, </em><em>optional</em>) – PolRing in which to define the ideal, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>shape ideal I</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#grobnercrystals.BIdeal" title="grobnercrystals.BIdeal">BIdeal</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.classical_det_ideal">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">classical_det_ideal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.classical_det_ideal" title="Link to this definition"></a></dt>
+<dd><p>Creates the BIdeal I of k by k minors of an m by n matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> (<em>int</em>) – number of rows in the matrix of variables</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of columns in the matrix of variables</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – size of minors</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>classical determinantal ideal</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#grobnercrystals.BIdeal" title="grobnercrystals.BIdeal">BIdeal</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.msv">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">msv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.msv" title="Link to this definition"></a></dt>
+<dd><p>Creates the BIdeal I defining the matrix Schubert variety corresponding
+to a permutation w. By default, I is inside a polynomial ring with matrix
+of variables of size r by c, where r is the last row of the Rothe diagram
+for w in which Fulton’s essential set has an element and c is the last column 
+of the Rothe diagram for w in which Fulton’s essential set has an element.</p>
+<p>Optionally, a different region may be specified. The polynomial ring will be 
+constructed as PolRing(r,c), where r is the greatest i such that (i,j) appears
+in the input region and c is the greatest j such that (i,j) appears in the 
+input region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>w</strong> (<em>list</em>) – permutation in one-line notation as a list of integers</p></li>
+<li><p><strong>region</strong> (<em>list</em><em>, </em><em>optional</em>) – list of tuples (i,j) defining a region in which to define the ideal, defaults to None</p></li>
+<li><p><strong>R</strong> (<a class="reference internal" href="#grobnercrystals.PolRing" title="grobnercrystals.PolRing"><em>PolRing</em></a><em>, </em><em>optional</em>) – the ring in which I is to be defined, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ideal defining the matrix Schubert variety for w</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#grobnercrystals.BIdeal" title="grobnercrystals.BIdeal">BIdeal</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.mrv">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">mrv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.mrv" title="Link to this definition"></a></dt>
+<dd><p>Constructs the matrix Richardson ideal corresponding to input
+permutations u and v.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>list</em>) – a permutation in one-line notation as a list of integers</p></li>
+<li><p><strong>v</strong> (<em>list</em>) – a permutation in one-line notation as a list of integers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the matrix Richardson ideal corresponding to u and v</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#grobnercrystals.BIdeal" title="grobnercrystals.BIdeal">BIdeal</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>The following function is useful for defining various
+determinantal ideals.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="grobnercrystals.minors">
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">minors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.minors" title="Link to this definition"></a></dt>
+<dd><p>Outputs the k by k minors of the matrix M of size k. Optionally, outputs
+the k by k minors of a submatrix B of M, input as [[list of rows of B],[list of columns of B]].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>M</strong> (<em>Sage matrix</em>) – matrix</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – minor size</p></li>
+<li><p><strong>B</strong> (<em>list</em><em>, </em><em>optional</em>) – submatrix of M, input as [[list of rows of B],[list of columns of B]] (row and column numbers are 0-indexed), defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of minors</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="group-action-checks">
-<h2>Group Action Checks<a class="headerlink" href="#group-action-checks" title="Permalink to this heading">¶</a></h2>
+<span id="group-actions"></span><h2>Group Action Checks<a class="headerlink" href="#group-action-checks" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="grobnercrystals.check_action">
-<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">check_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.check_action" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">check_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.check_action" title="Link to this definition"></a></dt>
 <dd><p>Checks whether a given Levi group acts on a given ideal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>I</strong> (<em>BIdeal</em>) – The ideal to be checked</p></li>
+<li><p><strong>I</strong> (<a class="reference internal" href="#grobnercrystals.BIdeal" title="grobnercrystals.BIdeal"><em>BIdeal</em></a>) – The ideal to be checked</p></li>
 <li><p><strong>L</strong> (<em>list</em>) – A Levi datum [I,J]</p></li>
 <li><p><strong>detailed_output</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, prints a pair (Gröbner basis element,Gröbner basis element after group action) which fails the check (if such a pair exists), defaults to False</p></li>
 </ul>
@@ -214,101 +739,99 @@ If the result of applying the operator to M is the empty symbol, return None.</p
 </dd></dl>
 
 </section>
+<section id="polynomials-and-schur-expansions">
+<h2>Polynomials and Schur Expansions<a class="headerlink" href="#polynomials-and-schur-expansions" title="Link to this heading"></a></h2>
+<p>Grobnercrystals includes a special class <code class="docutils literal notranslate"><span class="pre">SplitPoly</span></code> for polynomials in two sets of variables. This class has a <code class="docutils literal notranslate"><span class="pre">.expand()</span></code> method for computing split-Schur expansions of such polynomials.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="grobnercrystals.SplitPoly">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grobnercrystals.</span></span><span class="sig-name descname"><span class="pre">SplitPoly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">poly</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yR</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.SplitPoly" title="Link to this definition"></a></dt>
+<dd><p>A class for polynomials in two sets of variables (‘x’ variables and ‘y’
+variables). The rings in which the ‘x’ and ‘y’ variables live must be 
+specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>poly</strong> (<em>class 'sage.rings.polynomial.multi_polynomial_libsingular.MPolynomial_libsingular'</em>) – the polynomial as an element of a Sage MPolynomialRing</p></li>
+<li><p><strong>xR</strong> (<em>class 'sage.rings.polynomial.multi_polynomial_libsingular.MPolynomialRing_libsingular'</em>) – the ring of ‘x’ variables</p></li>
+<li><p><strong>yR</strong> (<em>class 'sage.rings.polynomial.multi_polynomial_libsingular.MPolynomialRing_libsingular'</em>) – the ring of ‘y’ variables</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>X</strong> – the generators of xR (output of xR.gens())</p></li>
+<li><p><strong>Y</strong> – the generators of yR (output of yR.gens())</p></li>
+<li><p><strong>x</strong> – list of strings [‘xi’] of ‘x’ variables</p></li>
+<li><p><strong>y</strong> – list of strings [‘yi’] of ‘y’ variables</p></li>
+<li><p><strong>deg</strong> – degree of the polynomial</p></li>
+<li><p><strong>d</strong> – dictionary for the polynomial of the form {degree : homogeneous component of the polynomial with that degree}</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="grobnercrystals.SplitPoly.expand">
+<span class="sig-name descname"><span class="pre">expand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returnDict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxIter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grobnercrystals.SplitPoly.expand" title="Link to this definition"></a></dt>
+<dd><p>Expands the polynomial into a sum of products of Schur polynomials
+based on a given Levi datum. If no inputs are given, returns the polynomial. 
+If the user specifies x=’m’ or y=’m’, the corresponding variables will
+be left as monomials. The default output is a string representing
+the expansion. Optionally, can output a dictionary of the form {tuple of 
+partitions, permutations, or exponents : coefficient in the expansion}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em><em>, </em><em>optional</em>) – What type of polynomial to expand the x variables in (‘s’ for Schur,’m’ for Monomial), defaults to None</p></li>
+<li><p><strong>y</strong> (<em>str</em><em>, </em><em>optional</em>) – What type of polynomial to expand the x variables in (‘s’ for Schur,’m’ for Monomial), defaults to None,</p></li>
+<li><p><strong>I</strong> (<em>list</em><em>, </em><em>optional</em>) – Row Levi datum, defaults to []</p></li>
+<li><p><strong>J</strong> (<em>list</em><em>, </em><em>optional</em>) – Column Levi datum, defaults to []</p></li>
+<li><p><strong>returnDict</strong> (<em>bool</em><em>, </em><em>optional</em>) – True to return a dictionary, False to return a string, defaults to False</p></li>
+<li><p><strong>maxIter</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of subtractions allowed per degree component, defaults to 10000</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>MemoryError</strong> – if the number of subtractions exceeds maxIter</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string representing the desired expansion (or, optionally, a dictionary)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str (optionally, dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
 
+           </div>
           </div>
-          
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Abigail Price.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">grobnercrystals</a></h1>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#permutations">Permutations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.Perm"><code class="docutils literal notranslate"><span class="pre">Perm</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.Perm.eff_reg"><code class="docutils literal notranslate"><span class="pre">Perm.eff_reg()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#grobnercrystals.Perm.levi_datum"><code class="docutils literal notranslate"><span class="pre">Perm.levi_datum()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#filtered-rsk">Filtered RSK</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.filtered_RSK"><code class="docutils literal notranslate"><span class="pre">filtered_RSK()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#crystal-operators-on-matrices">Crystal Operators on Matrices</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.e"><code class="docutils literal notranslate"><span class="pre">e()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.f"><code class="docutils literal notranslate"><span class="pre">f()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#polynomial-rings">Polynomial Rings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ideals-and-bicrystalline-tests">Ideals and Bicrystalline Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#interesting-classes-of-ideals">Interesting Classes of Ideals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#group-action-checks">Group Action Checks</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#grobnercrystals.check_action"><code class="docutils literal notranslate"><span class="pre">check_action()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="examples.html" title="previous chapter">Examples</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2025, Abigail Price.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/documentation.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
-  </body>
+</body>
 </html>
