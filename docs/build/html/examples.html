@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; grobnercrystals 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=0a291c44" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Documentation" href="documentation.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            grobnercrystals
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-1-5-double-bruhat-ideals">Example 1.5 (Double Bruhat Ideals)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-2-1-crystal-operators">Example 2.1 (Crystal operators)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-2-9-another-non-bicrystalline-ideal">Example 2.9 (Another non-bicrystalline ideal)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-3-8-test-set-algorithm">Example 3.8 (Test set algorithm)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-5-9-nilpotent-matrix-hessenberg-variety">Example 5.9 (Nilpotent matrix Hessenberg variety)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-6-20-matrix-matroid-ideal-continued">Example 6.20 (matrix matroid ideal, continued)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">grobnercrystals</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
+<p>This section contains computations for various examples from the paper. To follow along, first run the following (in a Sage shell):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">grobnercrystals</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gcs</span>
+</pre></div>
+</div>
+<section id="example-1-5-double-bruhat-ideals">
+<h2>Example 1.5 (Double Bruhat Ideals)<a class="headerlink" href="#example-1-5-double-bruhat-ideals" title="Link to this heading"></a></h2>
+<p>First, we define our polynomial ring <code class="docutils literal notranslate"><span class="pre">R</span></code> and ideal <code class="docutils literal notranslate"><span class="pre">I</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">PolRing</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span> <span class="o">=</span> <span class="p">[</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span><span class="o">.</span><span class="n">determinant</span><span class="p">(),</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span><span class="o">.</span><span class="n">determinant</span><span class="p">(),</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span>
+<span class="go">[z11, -z13*z22*z31 + z12*z23*z31 + z13*z21*z32 - z11*z23*z32 - z12*z21*z33 + z11*z22*z33, -z24*z33*z42 + z23*z34*z42 + z24*z32*z43 - z22*z34*z43 - z23*z32*z44 + z22*z33*z44, z44]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">BIdeal</span><span class="p">(</span><span class="n">gens</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can check that <code class="docutils literal notranslate"><span class="pre">I</span></code> is stable under <span class="math notranslate nohighlight">\((GL_1\times GL_2\times GL_1)\times (GL_1\times GL_2\times GL_1)\)</span> by running the following commands. <code class="docutils literal notranslate"><span class="pre">L</span></code> denotes the <em>Levi datum</em> associated to this group, defined in Section 2.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gcs</span><span class="o">.</span><span class="n">check_action</span><span class="p">(</span><span class="n">I</span><span class="p">,</span><span class="n">L</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>To compute the Hilbert series of <span class="math notranslate nohighlight">\(R/I\)</span> (or, equivalently, the character) up to degree 2, run:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hilb</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">hilb_exp</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">hilb</span></code> is a <code class="docutils literal notranslate"><span class="pre">grobnercrystals.SplitPoly</span></code> object. The Hilbert series is stored in <code class="docutils literal notranslate"><span class="pre">hilb.poly</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hilb</span><span class="o">.</span><span class="n">poly</span>
+<span class="go">x2*y1 + x3*y1 + x4*y1 + x1*y2 + x2*y2 + x3*y2 + x4*y2 + x1*y3 + x2*y3 + x3*y3 + x4*y3 + x1*y4 + x2*y4 + x3*y4 + 1</span>
+</pre></div>
+</div>
+<p>To find the split-Schur expansion of <code class="docutils literal notranslate"><span class="pre">hilb</span></code>, we can run:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hilb</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="n">I</span><span class="o">=</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">J</span><span class="o">=</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;1*s[0]s[1, 0]s[0]s[1]s[0, 0]s[0] + 1*s[0]s[0, 0]s[1]s[1]s[0, 0]s[0] + 1*s[1]s[0, 0]s[0]s[0]s[1, 0]s[0] + 1*s[0]s[1, 0]s[0]s[0]s[1, 0]s[0] + 1*s[0]s[0, 0]s[1]s[0]s[1, 0]s[0] + 1*s[1]s[0, 0]s[0]s[0]s[0, 0]s[1] + 1*s[0]s[1, 0]s[0]s[0]s[0, 0]s[1] + 1*s[0]s[0, 0]s[0]s[0]s[0, 0]s[0]&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="example-2-1-crystal-operators">
+<h2>Example 2.1 (Crystal operators)<a class="headerlink" href="#example-2-1-crystal-operators" title="Link to this heading"></a></h2>
+<p>First, we need to import numpy.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+<p>Define the numpy matrix <code class="docutils literal notranslate"><span class="pre">M</span></code> by:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span>
+<span class="go">matrix([[1, 1, 2],</span>
+<span class="go">        [2, 3, 1]])</span>
+</pre></div>
+</div>
+<p>To see the result of applying the row lowering operator <span class="math notranslate nohighlight">\(f_1^{row}\)</span> to <span class="math notranslate nohighlight">\(M\)</span>, run:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gcs</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="go">matrix([[0, 1, 2],</span>
+<span class="go">        [3, 3, 1]])</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">gcs.f()</span></code> does not modify <code class="docutils literal notranslate"><span class="pre">M</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span>
+<span class="go">matrix([[1, 1, 2],</span>
+<span class="go">        [2, 3, 1]])</span>
+</pre></div>
+</div>
+<p>To see the result of applying the column raising operator <span class="math notranslate nohighlight">\(e_2^{col}\)</span> to <span class="math notranslate nohighlight">\(M\)</span>, run:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gcs</span><span class="o">.</span><span class="n">e</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="go">matrix([[1, 1, 2],</span>
+<span class="go">        [2, 4, 0]])</span>
+</pre></div>
+</div>
+<p>If the output of a crystal operator is the empty symbol, <code class="docutils literal notranslate"><span class="pre">gcs.e()</span></code> and <code class="docutils literal notranslate"><span class="pre">gcs.f()</span></code> return <code class="docutils literal notranslate"><span class="pre">None</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span>
+<span class="go">matrix([[0, 1],</span>
+<span class="go">        [1, 0]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">gcs</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">))</span>
+<span class="go">&lt;class &#39;NoneType&#39;&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="example-2-9-another-non-bicrystalline-ideal">
+<h2>Example 2.9 (Another non-bicrystalline ideal)<a class="headerlink" href="#example-2-9-another-non-bicrystalline-ideal" title="Link to this heading"></a></h2>
+<p>First, define <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">PolRing</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span> <span class="o">=</span> <span class="p">[</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span><span class="o">.</span><span class="n">determinant</span><span class="p">(),</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span><span class="o">.</span><span class="n">determinant</span><span class="p">(),</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span>
+<span class="go">[z11, -z13*z22*z31 + z12*z23*z31 + z13*z21*z32 - z11*z23*z32 - z12*z21*z33 + z11*z22*z33, -z23*z32*z41 + z22*z33*z41 + z23*z31*z42 - z21*z33*z42 - z22*z31*z43 + z21*z32*z43, z41]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">BIdeal</span><span class="p">(</span><span class="n">gens</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can check that <code class="docutils literal notranslate"><span class="pre">I</span></code> carries a <span class="math notranslate nohighlight">\((GL_1\times GL_2\times GL_1)\times (GL_1\times GL_2\times GL_1)\)</span> action by running:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gcs</span><span class="o">.</span><span class="n">check_action</span><span class="p">(</span><span class="n">I</span><span class="p">,</span><span class="n">L</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>To check whether <code class="docutils literal notranslate"><span class="pre">I</span></code> is bicrystalline under any term order, run:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">bicrystalline</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Running</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">bicrystalline</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">detailed_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will print counterexamples for each initial ideal.</p>
+</section>
+<section id="example-3-8-test-set-algorithm">
+<h2>Example 3.8 (Test set algorithm)<a class="headerlink" href="#example-3-8-test-set-algorithm" title="Link to this heading"></a></h2>
+<p>First, define <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">PolRing</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span> <span class="o">=</span> <span class="p">[</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">^</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span>
+<span class="go">[z13^2, z13*z23, z23^2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">BIdeal</span><span class="p">(</span><span class="n">gens</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can compute a test set for <span class="math notranslate nohighlight">\(e_1^{row}\)</span> and graded reverse lexicographic order (‘GRevLex’ in Macaulay2) by running:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">test_set</span><span class="p">([</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="go">196</span>
+</pre></div>
+</div>
+<p>To specify a different term order, for instance, Macaulay2’s ‘Lex’ term order, we could run:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M1</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">test_set</span><span class="p">([</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">],</span><span class="n">to</span><span class="o">=</span><span class="s1">&#39;Lex&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, the initial ideals under ‘Lex’ and ‘GRevLex’ are the same, so the test sets are also the same:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">M1</span><span class="p">)</span>
+<span class="go">196</span>
+</pre></div>
+</div>
+<p>To compute a minimal test set for <span class="math notranslate nohighlight">\(e_1^{row}\)</span>, we can run:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M2</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">min_test_set</span><span class="p">([</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">M2</span><span class="p">)</span>
+<span class="go">11</span>
+</pre></div>
+</div>
+</section>
+<section id="example-5-9-nilpotent-matrix-hessenberg-variety">
+<h2>Example 5.9 (Nilpotent matrix Hessenberg variety)<a class="headerlink" href="#example-5-9-nilpotent-matrix-hessenberg-variety" title="Link to this heading"></a></h2>
+<p>First, define <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">PolRing</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]],[</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]],[</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]],[</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span>
+<span class="go">[  0 z11 z12]</span>
+<span class="go">[  0 z21 z22]</span>
+<span class="go">[  0 z31 z32]</span>
+<span class="go">[z11 z41 z42]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">minors</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span>
+<span class="go">[0, -z11*z12*z21 + z11^2*z22, -z11*z12*z31 + z11^2*z32, -z11*z22*z31 + z11*z21*z32]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span> <span class="o">=</span> <span class="n">gens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span>
+<span class="go">[-z11*z12*z21 + z11^2*z22, -z11*z12*z31 + z11^2*z32, -z11*z22*z31 + z11*z21*z32]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">BIdeal</span><span class="p">(</span><span class="n">gens</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can check that <code class="docutils literal notranslate"><span class="pre">I</span></code> is stable under the action of <span class="math notranslate nohighlight">\((GL_1\times GL_2\times GL_1)\times (GL_1\times GL_1)\)</span>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gcs</span><span class="o">.</span><span class="n">check_action</span><span class="p">(</span><span class="n">I</span><span class="p">,</span><span class="n">L</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The lead terms of the initial ideal of <code class="docutils literal notranslate"><span class="pre">I</span></code> under ‘GRevLex’ are:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">gb_lts</span><span class="p">()</span>
+<span class="go">[z11*z22*z31, z11*z12*z31, z11*z12*z21]</span>
+</pre></div>
+</div>
+<p>We can verify that <code class="docutils literal notranslate"><span class="pre">I</span></code> is indeed bicrystalline under ‘GRevLex’:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">bicrystalline</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">use_to</span><span class="o">=</span><span class="s1">&#39;GRevLex&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Under ‘Lex’ order, the lead terms of the initial ideal are:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">gb_lts</span><span class="p">(</span><span class="n">to</span><span class="o">=</span><span class="s1">&#39;Lex&#39;</span><span class="p">)</span>
+<span class="go">[z11*z21*z32, z11^2*z32, z11^2*z22]</span>
+</pre></div>
+</div>
+<p>We can verify that <code class="docutils literal notranslate"><span class="pre">I</span></code> is not bicrystalline under ‘Lex’:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">bicrystalline</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">use_to</span><span class="o">=</span><span class="s1">&#39;Lex&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span><span class="o">.</span><span class="n">bicrystalline</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">use_to</span><span class="o">=</span><span class="s1">&#39;Lex&#39;</span><span class="p">,</span><span class="n">detailed_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">Checking initial ideal  [array([[1, 0],</span>
+<span class="go">       [1, 0],</span>
+<span class="go">       [0, 1],</span>
+<span class="go">       [0, 0]]), array([[2, 0],</span>
+<span class="go">       [0, 0],</span>
+<span class="go">       [0, 1],</span>
+<span class="go">       [0, 0]]), array([[2, 0],</span>
+<span class="go">       [0, 1],</span>
+<span class="go">       [0, 0],</span>
+<span class="go">       [0, 0]])]</span>
+<span class="go">largest degree for rows: 2</span>
+<span class="go">largest degree for cols: 0</span>
+<span class="go">Checking degree: 0</span>
+<span class="go">Not bicrystalline (row raising operator 2):</span>
+<span class="go">[[1 0]</span>
+<span class="go"> [1 0]</span>
+<span class="go"> [0 1]</span>
+<span class="go"> [0 0]]</span>
+<span class="go">[[1 0]</span>
+<span class="go"> [1 1]</span>
+<span class="go"> [0 0]</span>
+<span class="go"> [0 0]]</span>
+<span class="go">Ideal is not bicrystalline for this term order: Lex</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</section>
+<section id="example-6-20-matrix-matroid-ideal-continued">
+<h2>Example 6.20 (matrix matroid ideal, continued)<a class="headerlink" href="#example-6-20-matrix-matroid-ideal-continued" title="Link to this heading"></a></h2>
+<p>First, define <code class="docutils literal notranslate"><span class="pre">I</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">PolRing</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">minors</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]],</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">gcs</span><span class="o">.</span><span class="n">minors</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]],</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">gcs</span><span class="o">.</span><span class="n">minors</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">Z</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">5</span><span class="p">]],</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gens</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="o">-</span><span class="n">z12</span><span class="o">*</span><span class="n">z21</span> <span class="o">+</span> <span class="n">z11</span><span class="o">*</span><span class="n">z22</span><span class="p">,</span> <span class="o">-</span><span class="n">z13</span><span class="o">*</span><span class="n">z21</span> <span class="o">+</span> <span class="n">z11</span><span class="o">*</span><span class="n">z23</span><span class="p">,</span> <span class="o">-</span><span class="n">z13</span><span class="o">*</span><span class="n">z22</span> <span class="o">+</span> <span class="n">z12</span><span class="o">*</span><span class="n">z23</span><span class="p">,</span><span class="o">-</span><span class="n">z15</span><span class="o">*</span><span class="n">z24</span> <span class="o">+</span> <span class="n">z14</span><span class="o">*</span><span class="n">z25</span><span class="p">,</span> <span class="n">z16</span><span class="p">,</span> <span class="n">z26</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">gcs</span><span class="o">.</span><span class="n">BIdeal</span><span class="p">(</span><span class="n">gens</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can see the first few terms in the character by running:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hilb</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">hilb_exp</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hilb</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="n">I</span><span class="o">=</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">J</span><span class="o">=</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;1*s[2, 0]s[2]s[0]s[0]s[0]s[0]s[0] + 1*s[2, 0]s[1]s[1]s[0]s[0]s[0]s[0] + 1*s[2, 0]s[1]s[0]s[1]s[0]s[0]s[0] + 1*s[2, 0]s[1]s[0]s[0]s[1]s[0]s[0] + 1*s[2, 0]s[1]s[0]s[0]s[0]s[1]s[0] + 1*s[2, 0]s[0]s[2]s[0]s[0]s[0]s[0] + 1*s[2, 0]s[0]s[1]s[1]s[0]s[0]s[0] + 1*s[2, 0]s[0]s[1]s[0]s[1]s[0]s[0] + 1*s[2, 0]s[0]s[1]s[0]s[0]s[1]s[0] + 1*s[2, 0]s[0]s[0]s[2]s[0]s[0]s[0] + 1*s[1, 1]s[1]s[0]s[0]s[1]s[0]s[0] + 1*s[1, 1]s[1]s[0]s[0]s[0]s[1]s[0] + 1*s[1, 1]s[0]s[1]s[0]s[1]s[0]s[0] + 1*s[2, 0]s[0]s[0]s[1]s[1]s[0]s[0] + 1*s[1, 1]s[0]s[1]s[0]s[0]s[1]s[0] + 1*s[1, 1]s[0]s[0]s[1]s[1]s[0]s[0] + 1*s[2, 0]s[0]s[0]s[1]s[0]s[1]s[0] + 1*s[2, 0]s[0]s[0]s[0]s[2]s[0]s[0] + 1*s[1, 1]s[0]s[0]s[1]s[0]s[1]s[0] + 1*s[2, 0]s[0]s[0]s[0]s[1]s[1]s[0] + 1*s[2, 0]s[0]s[0]s[0]s[0]s[2]s[0] + 1*s[1, 0]s[1]s[0]s[0]s[0]s[0]s[0] + 1*s[1, 0]s[0]s[1]s[0]s[0]s[0]s[0] + 1*s[1, 0]s[0]s[0]s[1]s[0]s[0]s[0] + 1*s[1, 0]s[0]s[0]s[0]s[1]s[0]s[0] + 1*s[1, 0]s[0]s[0]s[0]s[0]s[1]s[0] + 1*s[0, 0]s[0]s[0]s[0]s[0]s[0]s[0]&#39;</span>
+</pre></div>
+</div>
+<p>We could get the same expansion in a slightly more readable form by specifying that the ‘y’ variables may be left as monomials:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hilb</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="n">I</span><span class="o">=</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">J</span><span class="o">=</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;1*s[2, 0]m[2, 0, 0, 0, 0, 0] + 1*s[2, 0]m[1, 1, 0, 0, 0, 0] + 1*s[2, 0]m[1, 0, 1, 0, 0, 0] + 1*s[2, 0]m[1, 0, 0, 1, 0, 0] + 1*s[2, 0]m[1, 0, 0, 0, 1, 0] + 1*s[2, 0]m[0, 2, 0, 0, 0, 0] + 1*s[2, 0]m[0, 1, 1, 0, 0, 0] + 1*s[2, 0]m[0, 1, 0, 1, 0, 0] + 1*s[2, 0]m[0, 1, 0, 0, 1, 0] + 1*s[2, 0]m[0, 0, 2, 0, 0, 0] + 1*s[1, 1]m[1, 0, 0, 1, 0, 0] + 1*s[1, 1]m[1, 0, 0, 0, 1, 0] + 1*s[1, 1]m[0, 1, 0, 1, 0, 0] + 1*s[2, 0]m[0, 0, 1, 1, 0, 0] + 1*s[1, 1]m[0, 1, 0, 0, 1, 0] + 1*s[1, 1]m[0, 0, 1, 1, 0, 0] + 1*s[2, 0]m[0, 0, 1, 0, 1, 0] + 1*s[2, 0]m[0, 0, 0, 2, 0, 0] + 1*s[1, 1]m[0, 0, 1, 0, 1, 0] + 1*s[2, 0]m[0, 0, 0, 1, 1, 0] + 1*s[2, 0]m[0, 0, 0, 0, 2, 0] + 1*s[1, 0]m[1, 0, 0, 0, 0, 0] + 1*s[1, 0]m[0, 1, 0, 0, 0, 0] + 1*s[1, 0]m[0, 0, 1, 0, 0, 0] + 1*s[1, 0]m[0, 0, 0, 1, 0, 0] + 1*s[1, 0]m[0, 0, 0, 0, 1, 0] + 1*s[0, 0]m[0, 0, 0, 0, 0, 0, 0, 0]&#39;</span>
+</pre></div>
+</div>
+<p>Here, for instance, <code class="docutils literal notranslate"><span class="pre">m[2,0,0,0,0,0]</span></code> refers to the monomial <span class="math notranslate nohighlight">\(y_1^2\)</span>.</p>
+<p>We can see the non-standard monomials of <code class="docutils literal notranslate"><span class="pre">I</span></code> under ‘GRevLex’ by running:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">nstd_mons</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span>
+<span class="go">[z11*z16, z12*z16, z13*z16, z14*z16, z15*z16, z16^2, z16*z21, z16*z22, z16*z23, z16*z24, z16*z25, z16*z26, z12*z21, z13*z21, z13*z22, z15*z24, z11*z26, z12*z26, z13*z26, z14*z26, z15*z26, z21*z26, z22*z26, z23*z26, z24*z26, z25*z26, z26^2]</span>
+</pre></div>
+</div>
+<p>We can also get the non-standard monomials of <code class="docutils literal notranslate"><span class="pre">I</span></code> as numpy arrays.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">NMat</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">nstd_mons_mats</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">NMat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="go">       [0, 0, 0, 0, 0, 0]])</span>
+</pre></div>
+</div>
+<p>We can use Sage’s <code class="docutils literal notranslate"><span class="pre">RSK</span></code> function to see that, for instance:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">P</span><span class="p">,</span><span class="n">Q</span><span class="p">]</span> <span class="o">=</span> <span class="n">RSK</span><span class="p">(</span><span class="n">NMat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">P</span>
+<span class="go">[[1, 1, 1, 1]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span>
+<span class="go">[[1, 1, 1, 6]]</span>
+</pre></div>
+</div>
+<p>Since <code class="docutils literal notranslate"><span class="pre">Q</span></code> contains a 6, it violates condition (I) in this example.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sage’s conventions for <code class="docutils literal notranslate"><span class="pre">RSK</span></code> differ from our conventions. For a matrix <code class="docutils literal notranslate"><span class="pre">M</span></code>, if you run</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">P</span><span class="p">,</span><span class="n">Q</span><span class="p">]</span> <span class="o">=</span> <span class="n">RSK</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>in Sage, <code class="docutils literal notranslate"><span class="pre">P</span></code> is what we would call in our notation the <span class="math notranslate nohighlight">\(Q\)</span> tableau. This is why, in the example above, we took the transpose of <code class="docutils literal notranslate"><span class="pre">NMat[0]</span></code> before applying <code class="docutils literal notranslate"><span class="pre">RSK</span></code>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="documentation.html" class="btn btn-neutral float-right" title="Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Abigail Price.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
